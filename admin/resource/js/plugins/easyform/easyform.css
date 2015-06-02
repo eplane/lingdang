@@ -1,0 +1,2 @@
+.easyform-close{background-image: url('close-normal.png'); width:20px !important; height: 20px !important; line-height: 20px !important;}
+.easyform-close:hover{background-image: url('close-over.png');}
