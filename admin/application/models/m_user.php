@@ -20,7 +20,7 @@ class m_user extends m_base
         $id = $this->get_id($uid);
         $user = $this->get($id, TRUE);
 
-        if (password_verify($password, $user['password']))
+        if (password_verify($password, $user['psw']))
         {
             //判断是否拥有合法的角色
             if (count($user['role']) > 0)
@@ -47,9 +47,14 @@ class m_user extends m_base
 
             $info = $this->edb->get_one($refresh, 'user_info', '`id` = ' . $id);
 
+            $roles['role'] = [];
+
             //获得角色
-            $this->load->model('m_role', 'mrole');
-            $roles['role'] = $this->mrole->gets($info['role'], TRUE, $refresh);
+            if (isset($info['role']))
+            {
+                $this->load->model('m_role', 'mrole');
+                $roles['role'] = $this->mrole->gets($info['role'], TRUE, $refresh);
+            }
 
             $data = array_merge($login, $info, $roles);
 
@@ -65,7 +70,7 @@ class m_user extends m_base
         {
             $id = $this->edb->get_one($refresh, 'user', '`uid`="' . $uid . '"', '`id`');
 
-            if( $id != FALSE )
+            if ($id != FALSE)
                 $id = $id['id'];
 
             return $id;

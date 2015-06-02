@@ -99,7 +99,7 @@
             <ul class="sidebar-menu">
 
                 <li class="active" style="line-height:25px;">
-                    <a href="<?php echo base_url(); ?>admin.html">
+                    <a href="<?php echo base_url(); ?>main.html">
                         <i class="fa fa-home"></i> <span>主页</span>
                     </a>
                 </li>
@@ -107,13 +107,13 @@
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span>员工管理</span>
+                        <span>用户管理</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="<?php echo base_url(); ?>admin/stuff.html"><i class="fa fa-angle-double-right"></i>员工列表</a></li>
-                        <li><a href="<?php echo base_url(); ?>admin/role.html"><i class="fa fa-angle-double-right"></i>职务列表</a></li>
-                        <li><a href="<?php echo base_url(); ?>admin/role/add.html"><i class="fa fa-angle-double-right"></i>添加职务</a></li>
+                        <li><a href="<?php echo base_url(); ?>admin/stuff.html"><i class="fa fa-angle-double-right"></i>用户列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>admin/role.html"><i class="fa fa-angle-double-right"></i>角色列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>admin/role/add.html"><i class="fa fa-angle-double-right"></i>权限列表</a></li>
                     </ul>
                 </li>
 
@@ -121,11 +121,15 @@
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span>系统</span>
+                        <span>内容管理</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>公司资料</a></li>
+                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>文章列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>博客列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>图片列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>频道列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>关键词列表</a></li>
                     </ul>
                 </li>
 
@@ -133,25 +137,11 @@
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-edit"></i>
-                        <span>内容管理</span>
+                        <span>协议管理</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>发布文章</a></li>
-                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>草稿箱</a></li>
-                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>频道列表</a></li>
-                    </ul>
-                </li>
-
-                <li class="treeview active">
-                    <a href="#">
-                        <i class="fa fa-star"></i>
-                        <span>会员管理</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>会员列表</a></li>
-                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>会员等级列表</a></li>
+                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>协议列表</a></li>
                     </ul>
                 </li>
 

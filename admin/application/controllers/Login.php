@@ -46,7 +46,7 @@ class Login extends CI_Controller
         }
         else
         {
-            $this->form_validation->set_message('do_login', '用户名或密码错误!');
+            $this->form_validation->set_message('_login', '用户名或密码错误!');
             return FALSE;
         }
     }

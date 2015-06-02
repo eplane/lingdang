@@ -39,10 +39,18 @@ class m_role extends m_base
     {
         $data = [];
 
+        var_dump($roles);
+
         if (is_string($roles))
         {
             $roles = explode(',', $roles);
         }
+        else
+        {
+            return $data;
+        }
+
+
 
         foreach ($roles as $row)
         {

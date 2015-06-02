@@ -11,9 +11,6 @@ class Main extends Controller_base
 
     public function index()
     {
-
-        //echo password_hash('111111', PASSWORD_DEFAULT );
-
         //路径导航条数据
         $data['nav'] = ['主页'=>'main.html', '主页1'=>''];
 
