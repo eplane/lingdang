@@ -23,15 +23,19 @@ class m_user extends m_base
         if (password_verify($password, $user['psw']))
         {
             //判断是否拥有合法的角色
-            if (count($user['role']) > 0)
+            if ($user['status'] == 'normal' && count($user['role']) > 0)
             {
                 //建立session
                 $_SESSION['me'] = $user;
                 return TRUE;
             }
+            else
+            {
+                return 2;//账户被停用;
+            }
         }
 
-        return FALSE;
+        return 1; // 用户名或密码错误;
     }
 
     public function logout()

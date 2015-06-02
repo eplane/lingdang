@@ -869,7 +869,7 @@ body > .header .logo .icon {
   background: #3c8dbc;
   text-align: center;
 }
-.navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header img.avatar {
   z-index: 5;
   height: 90px;
   width: 90px;

@@ -6,7 +6,7 @@ class Controller_base extends CI_Controller
     {
         parent::__construct();
 
-        if(FALSE == $this->is_login())
+        if (FALSE == $this->is_login())
         {
             redirect(base_url() . 'login.html');
         }
@@ -19,7 +19,7 @@ class Controller_base extends CI_Controller
 
     protected function view($page, $data)
     {
-        if(FALSE == isset($data['html_title']))
+        if (FALSE == isset($data['html_title']))
         {
             $data['html_title'] = $this->config->item('title');
         }
@@ -28,5 +28,20 @@ class Controller_base extends CI_Controller
             $data['page'] = $this->load->view($page, $data, TRUE);
 
         $this->load->view('template', $data);
+    }
+
+    protected function is_permit($access = NULL)
+    {
+        //获得请求地址
+        $uri = uri_string();
+
+        //var_dump($uri);
+
+        return TRUE;
+    }
+
+    public function error()
+    {
+
     }
 }

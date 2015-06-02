@@ -61,11 +61,11 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <img
+                            <a href="#"><img
                                 src="<?php echo get_file($_SESSION['me']['avatar'], get_path('common-img') . 'avatar.jpg'); ?>"
-                                class="img-circle" alt="User Image"
+                                class="img-circle avatar" alt="User Image"
                                 onclick="javascript:window.location.href='<?php echo base_url(); ?>admin/user/me.html';"
-                                style="cursor:pointer;"/>
+                                style="cursor:pointer;"/></a>
 
                             <p>
                                 <?php echo $_SESSION['me']['name']; ?>

@@ -14,8 +14,6 @@ class Login extends CI_Controller
      */
     public function index()
     {
-        //var_dump(password_hash('111111', PASSWORD_DEFAULT));
-
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
@@ -40,13 +38,19 @@ class Login extends CI_Controller
      */
     public function _login($user, $password)
     {
-        if ($this->muser->login($user, $password))
+        $r = $this->muser->login($user, $password);
+
+        if ($r === TRUE)
         {
             return TRUE;
         }
         else
         {
-            $this->form_validation->set_message('_login', '用户名或密码错误!');
+            if ($r === 1)
+                $this->form_validation->set_message('_login', '用户名或密码错误!');
+            else
+                $this->form_validation->set_message('_login', '账户被停用!');
+
             return FALSE;
         }
     }
@@ -60,10 +64,5 @@ class Login extends CI_Controller
         $this->muser->logout();
 
         redirect(base_url() . 'login.html');
-    }
-
-    public function t()
-    {
-        echo 1;
     }
 }

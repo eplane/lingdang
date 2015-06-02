@@ -58,4 +58,9 @@ class User extends admin_base
              $this->view('me', $data);
         }
     }
+
+    public function users()
+    {
+
+    }
 }
