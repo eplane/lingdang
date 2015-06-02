@@ -14,6 +14,8 @@ class Login extends CI_Controller
      */
     public function index()
     {
+        //var_dump(password_hash('111111', PASSWORD_DEFAULT));
+
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
