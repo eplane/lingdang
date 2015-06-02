@@ -57,4 +57,12 @@ class m_role extends m_base
 
         return $data;
     }
+
+    /** 获得一个角色的全部权限
+     * @param $role
+     */
+    public function get_access($role, $refresh = FALSE)
+    {
+
+    }
 }
