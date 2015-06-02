@@ -1,0 +1,9 @@
+{
+    "login":"Login",
+    "uid-placeholder":"Please input your ID",
+    "uid-message":"Must input 4-20 litters",
+    "password-placeholder":"Please input your password",
+    "password-message":"Must input 6-20 litters",
+    "forget":"Forgot password",
+    "regist":"Regist a new ID"
+}

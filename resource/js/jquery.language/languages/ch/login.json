@@ -1,0 +1,9 @@
+{
+    "login":"登录",
+    "uid-placeholder":"请输入用户名",
+    "uid-message":"必须为4-20位英文字母",
+    "password-placeholder":"请输入密码",
+    "password-message":"必须为6-20位英文字母",
+    "forget":"忘记密码",
+    "regist":"注册"
+}

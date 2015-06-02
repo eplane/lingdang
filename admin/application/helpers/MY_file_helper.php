@@ -1,25 +1,27 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-if (!function_exists('efile_get_file'))
+if (!function_exists('get_file'))
 {
     /** 获得图片的实际路径，请确认该图片是经过 efile 类保存的。
      * @param string $file 文件名
      * @return bool|string
      */
-    function efile_get_file($file)
+    function get_file($file, $default = NULL)
     {
         $CI =& get_instance();
+        $CI->load->library('File');
 
         if (!!$file)
         {
-            $CI->load->library('Efile');
-            return $CI->efile->get_file($file);
+            return $CI->file->get_file($file);
         }
         else
         {
-            $msg = sprintf($CI->lang->line('error_efile_no_file'), $file);
-            trigger_error($msg, E_USER_ERROR);
-            return FALSE;
+            return $default;
+
+            //$msg = sprintf($CI->lang->line('error_efile_no_file'), $file);
+            //trigger_error($msg, E_USER_ERROR);
+            //return FALSE;
         }
     }
 }
@@ -37,7 +39,7 @@ if (!function_exists('get_path'))
 
         if (isset($other_path[$path]))
         {
-            return $other_path[$path];
+            return base_url().$other_path[$path];
         }
         else
         {

@@ -135,6 +135,7 @@ $(function() {
     });
 
     /* For demo purposes */
+    /*
     var demo = $("<div />").css({
         position: "fixed",
         top: "150px",
@@ -203,7 +204,7 @@ $(function() {
     });
 
     $("body").append(demo);
-    $("body").append(demo_settings);
+    $("body").append(demo_settings);*/
 });
 function fix_sidebar() {
     //Make sure the body tag has the .fixed class
