@@ -2,7 +2,7 @@
 
 require_once('admin_base.php');
 
-class user extends admin_base
+class User extends admin_base
 {
     public function __construct()
     {

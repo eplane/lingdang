@@ -1,37 +1,44 @@
 ﻿<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class login extends CI_Controller
+class Login extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->load->library('session');
-
         $this->load->model('m_user', 'muser');
     }
 
+    /**
+     * 登录页面
+     */
     public function index()
     {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('uid', '登录', 'callback_do_login[' . $this->input->post('password') . ']');
+        $this->form_validation->set_rules('uid', '登录', 'callback__login[' . $this->input->post('password') . ']');
 
         if ($this->form_validation->run() == FALSE)
         {
-            $data['tab_title'] = '';
+            $data['tab_title'] = $this->config->item('title');
             $this->load->view('login', $data);
         }
         else
         {
-            //redirect(base_url() . 'role.html');
+            redirect(base_url() . 'main.html');
         }
     }
 
-    public function do_login($user, $password)
+    /**
+     * 执行登录，因为form验证的原因，写成了这样
+     * @param $user
+     * @param $password
+     * @return bool
+     */
+    public function _login($user, $password)
     {
-        if ($this->muser->login_admin($user, $password))
+        if ($this->muser->login($user, $password))
         {
             return TRUE;
         }
@@ -42,10 +49,19 @@ class login extends CI_Controller
         }
     }
 
+
+    /**
+     * 登出
+     */
     public function logout()
     {
-        $this->session->sess_destroy();
+        $this->muser->logout();
 
-        redirect(base_url() . 'login');
+        redirect(base_url() . 'login.html');
+    }
+
+    public function t()
+    {
+        echo 1;
     }
 }
