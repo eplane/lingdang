@@ -1,0 +1,9 @@
+.listselect-mask{background-color: black;-moz-opacity: 0.6; opacity:.60; filter: alpha(opacity=60);}
+.listselect{position: absolute;}
+.listselect .listselect-container{background-color: #fff;width:415px; padding:10px; border-radius: 3px; margin:70px;}
+.listselect .listselect-close{width:20px;height:20px;background-image: url(close.png);}
+.listselect .listselect-item{margin:5px; background-color: #dddddd; border:1px solid #fff;padding:5px 7px; border-radius: 2px; font-size: 12px;}
+.listselect .listselect-item:hover{border:1px solid #777;}
+.listselect .listselect-button{padding:5px 10px; float:right; background-color: #006DCC; color:#fff; margin: 5px; border-radius: 3px; border:1px solid #ccc;}
+.listselect .listselect-button:hover{border:1px solid #999;background-color: #08C;}
+.listselect .listselect-info{padding: 0 7px 10px 7px;}

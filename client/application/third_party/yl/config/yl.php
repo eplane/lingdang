@@ -1,0 +1,19 @@
+<?php
+$config['yl'] ['transType'] = '01';
+$config['yl']  ['transferFee'] = 0;
+$config['yl']  ['orderCurrency'] = '156';
+$config['yl']  ['orderTime'] = date('YmdHis');
+$config['yl']  ['customerIp'] = '';                //客户IP
+$config['yl']  ['transTimeout'] = '80000000';               //请求过期时间
+$config['yl']  ['frontEndUrl'] = 'https://101.231.204.80:5000/gateway/api/frontTransReq.do';
+$config['yl']  ['backEndUrl'] = 'https://101.231.204.80:5000/gateway/api/backTransReq.do';
+$config['yl']   ['origQid'] = '';
+$config['yl']  ['defaultPayType'] = 'CSPay';
+$config['yl']  ['defaultBankNumber'] = '';
+$config['yl']  ['bank'] = "";
+$config['yl']   ['commodityUrl'] = '';        //商户网站地址
+$config['yl']   ['commodityName'] = '';  //商户名称
+$config['yl']   ['commodityUnitPrice'] = "";
+$config['yl']   ['commodityQuantity'] = 1;
+$config['yl']   ['commodityDiscount'] = 0;
+$config['yl']  ['merReserved'] = '';
