@@ -88,8 +88,6 @@
     </nav>
 </header>
 
-
-
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="left-side sidebar-offcanvas" style="/*display:none;*/">
@@ -111,6 +109,7 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
+                        <li><a href="<?php echo base_url(); ?>user/admins.html"><i class="fa fa-angle-double-right"></i>管理员列表</a></li>
                         <li><a href="<?php echo base_url(); ?>admin/stuff.html"><i class="fa fa-angle-double-right"></i>用户列表</a></li>
                         <li><a href="<?php echo base_url(); ?>admin/role.html"><i class="fa fa-angle-double-right"></i>角色列表</a></li>
                         <li><a href="<?php echo base_url(); ?>admin/role/add.html"><i class="fa fa-angle-double-right"></i>权限列表</a></li>
@@ -141,7 +140,7 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i>协议列表</a></li>
+                        <li><a href="javascript:void(0);"><i class="fa fa-angle-double-right"></i>协议列表</a></li>
                     </ul>
                 </li>
 
@@ -158,13 +157,12 @@
             <?php foreach ($nav as $text => $url): ?>
 
                 <?php if (!!$url): ?>
-                    <li><a href="<?php echo base_url().$url; ?>"><h4><?php echo $text; ?></h4></a></li>
+                    <li><a href="<?php echo base_url().$url; ?>"><?php echo $text; ?></a></li>
                 <?php else: ?>
                     <li class="active"><?php echo $text; ?></li>
                 <?php endif; ?>
 
             <?php endforeach; ?>
-
         </ol>
 
         <!-- Main content -->

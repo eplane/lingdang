@@ -1,8 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once('admin_base.php');
+require_once('Controller_base.php');
 
-class User extends admin_base
+class User extends Controller_base
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class User extends admin_base
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
 
-        $data['title']     = '我的信息';
+        $data['title'] = '我的信息';
         $data['sub_title'] = '管理自己的平台信息';
 
-        $data['user']             = $user;
+        $data['user'] = $user;
         $data['user']['birthday'] = date('Y/m/d', $data['user']['birthday']);
 
         if ($this->form_validation->run() == FALSE)
@@ -34,12 +34,12 @@ class User extends admin_base
         else
         {
             //保存角色信息
-            $submit['name']     = $this->input->post('name');
+            $submit['name'] = $this->input->post('name');
             $submit['nickname'] = $this->input->post('nickname');
-            $submit['mobile']   = $this->input->post('mobile');
-            $submit['email']    = $this->input->post('email');
+            $submit['mobile'] = $this->input->post('mobile');
+            $submit['email'] = $this->input->post('email');
             $submit['birthday'] = strtotime($this->input->post('birthday'));
-            $submit['sex']      = $this->input->post('sex');
+            $submit['sex'] = $this->input->post('sex');
 
             $this->load->library('Efile');
 
@@ -55,12 +55,24 @@ class User extends admin_base
 
             $data['user'] = $this->session->user;
 
-             $this->view('me', $data);
+            $this->view('me', $data);
         }
     }
 
-    public function users()
+    public function admins()
     {
+        if (TRUE === $this->is_permit('浏览管理员'))
+        {
+            //路径导航条数据
+            $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '管理员列表' => ''];
 
+            $data['data'] = $this->muser->gets();
+
+            $this->view('admins', $data);
+        }
+        else
+        {
+            redirect(base_url() . 'main/error.html');
+        }
     }
 }

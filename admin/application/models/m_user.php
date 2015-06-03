@@ -17,13 +17,13 @@ class m_user extends m_base
     public function login($uid, $password)
     {
         //获得用户数据
-        $id = $this->get_id($uid);
+        $id = $this->get_id($uid, TRUE);
         $user = $this->get($id, TRUE);
 
         if (password_verify($password, $user['psw']))
         {
             //判断是否拥有合法的角色
-            if ($user['status'] == 'normal' && count($user['role']) > 0)
+            if ($user['status'] == '正常' && count($user['role']) > 0)
             {
                 //建立session
                 $_SESSION['me'] = $user;
@@ -43,14 +43,20 @@ class m_user extends m_base
         $this->session->sess_destroy();
     }
 
+    /**
+     * @param int $id
+     * @param bool $refresh
+     * @return array|null
+     */
     public function get($id, $refresh = FALSE)
     {
         if (!!$id)
         {
-            $login = $this->edb->get_one($refresh, 'user', '`id` = ' . $id);
+            $login = $this->edb->get_row_id($refresh, 'admin', $id);
 
-            $info = $this->edb->get_one($refresh, 'user_info', '`id` = ' . $id);
+            $info = $this->edb->get_row_id($refresh, 'admin_info', $id);
 
+            $roles['roles'] = $info ['role'];
             $roles['role'] = [];
 
             //获得角色
@@ -72,14 +78,45 @@ class m_user extends m_base
     {
         if (!!$uid)
         {
-            $id = $this->edb->get_one($refresh, 'user', '`uid`="' . $uid . '"', '`id`');
-
-            if ($id != FALSE)
-                $id = $id['id'];
+            $id = $this->edb->get_value($refresh, 'admin', '`uid`="' . $uid . '"', 'id');
 
             return $id;
         }
         else
             return NULL;
+    }
+
+    public function gets()
+    {
+        $this->db->select('*');
+        $this->db->from('admin');
+        $this->db->join('admin_info', 'admin_info.id = admin.id');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function toggle($id)
+    {
+        $enum = $this->edb->enum('admin', 'status');
+
+        $user = $this->get($id);
+
+        $status = $user['status'];
+        $index = -1;
+
+        foreach ($enum as $key => $value)
+        {
+            if ($value == $status)
+            {
+                $index = $key;
+                break;
+            }
+        }
+
+        $data['status'] = ($index + 1) % count($enum) + 1;
+
+        $this->edb->set_row_id('admin', $data, $id);
     }
 }

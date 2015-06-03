@@ -12,11 +12,14 @@ class Edb
 
     private $db;
 
+    private $ci;
+
     public function __construct()
     {
-        $CI =& get_instance();
-        $CI->load->database();
-        $this->db = $CI->db;
+        $this->ci =& get_instance();
+        $this->ci->load->database();
+        $this->ci->load->library('Cache');
+        $this->db = $this->ci->db;
     }
 
     /*****************************[select]******************************/
@@ -181,9 +184,11 @@ class Edb
     {
         return $this->db->last_query();
     }
+
+
     /*****************************[cache]******************************/
 
-    /** 从缓存中获得数据
+    /** 从缓存中获得数据，需要注意同步问题。
      * @param bool $refresh 是否强制刷新数据
      * @param string $table 表
      * @param string $where 条件
@@ -195,28 +200,19 @@ class Edb
      */
     public function get($refresh, $table, $where = '', $column = '*', $order = '', $count = -1, $start = 0)
     {
-        $CI =& get_instance();
-        $CI->load->library('Cache');
-
-        //如果加载缓存类失败
-        if (!$CI->cache)
-        {
-            return $this->select($table, $where, $column, $order, $count, $start);
-        }
-
         $key = md5($table . $where);
 
         if (TRUE === $refresh)
         {
-            $CI->cache->delete($key);
+            $this->ci->cache->delete($key);
         }
 
         //如果缓存中没有数据
-        $data = $CI->cache->get($key, function ($key) use ($CI, $table, $where, $column, $order, $count, $start)
+        $data = $this->ci->cache->get($key, function ($key) use ($table, $where, $column, $order, $count, $start)
         {
             $data = $this->select($table, $where, $column, $order, $count, $start);
 
-            $CI->cache->save($key, $data, $CI->config->item('data_timeout'));
+            $this->ci->cache->save($key, $data, $this->ci->config->item('data_timeout'));
         });
 
         return $data;
@@ -224,37 +220,99 @@ class Edb
 
 
     /** 在一个表中查询一行数据，注意，如果有多行返回值，只返回第一行
-     * @param $refresh
-     * @param $table
-     * @param $id
+     * @param bool $refresh
+     * @param string $table
+     * @param int $id
+     * @return array|bool
+     */
+    public function get_row_id($refresh, $table, $id)
+    {
+        $key = ($table . $id);
+
+        if (TRUE === $refresh)
+        {
+            $this->ci->cache->delete($key);
+        }
+
+        //如果缓存中没有数据
+        $data = $this->ci->cache->get($key, function ($key) use ($table, $id)
+        {
+            $data = $this->select_row($table, '`id` = ' . $id);
+
+            $this->ci->cache->save($key, $data, $this->ci->config->item('data_timeout'));
+        });
+
+        return $data;
+    }
+
+    public function set_row_id($table, $data, $id)
+    {
+        $this->update($table, $data, '`id` = ' . $id);
+
+        $key = $table . $id;
+
+        $this->ci->cache->delete($key);
+    }
+
+    /** 查询并缓存一个值，需要注意同步问题。
+     * @param bool $refresh
+     * @param string $table
+     * @param string $where
+     * @param string $column
+     * @param string $order
+     * @param int $start
      * @return mixed
      */
-    public function get_one($refresh, $table, $where, $column = '*')
+    public function get_value($refresh, $table, $where, $column, $order = '', $start = 0)
     {
-        $CI =& get_instance();
-        $CI->load->library('Cache');
+        $key = md5($table . $where);
 
-        $data = $this->get($refresh, $table, $where, $column);
+        if (TRUE === $refresh)
+        {
+            $this->ci->cache->delete($key);
+        }
 
-        return (!!$data[0]) ? ($data[0]) : (NULL);
+        //如果缓存中没有数据
+        $data = $this->ci->cache->get($key, function ($key) use ($table, $where, $column, $order, $start)
+        {
+            $data = $this->select_one($table, $where, $column, $order, $start);
+
+            $this->ci->cache->save($key, $data, $this->ci->config->item('data_timeout'));
+        });
+
+        return $data;
     }
 
     public function recycle($table, $where)
     {
-        $CI =& get_instance();
-        $CI->load->library('Cache');
-
-        if (!!$CI->cache)
+        if (!!$this->ci->cache)
         {
             $key = md5($table . $where);
-            return $CI->cache->delete($key);
+            return $this->ci->cache->delete($key);
         }
         else
             return FALSE;
     }
 
-    public function recycle_one($table, $id)
+    /** 获取枚举类型的值列表
+     * @param string $table 表名
+     * @param string $column 列名
+     * @return array
+     */
+    public function enum($table, $column)
     {
-        return $this->recycle($table, '`id` = ' . $id);
+        $sql = 'SHOW COLUMNS FROM `' . $table . '` LIKE \'' . $column . '\'';
+
+        $query = $this->db->query($sql);
+
+        $enum = $query->result_array();
+
+        $data = $enum[0]['Type'];
+
+        $data = substr($data, 5, strlen($data) - 6);
+        $data = str_replace('\'', '', $data);
+        $data = explode(',', $data);
+
+        return $data;
     }
 }

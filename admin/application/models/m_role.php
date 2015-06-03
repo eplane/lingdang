@@ -16,7 +16,7 @@ class m_role extends m_base
      */
     public function get($id, $valid = TRUE, $refresh = FALSE)
     {
-        $role = $this->edb->get_one($refresh, 'role', '`id` = ' . $id);
+        $role = $this->edb->get_row_id($refresh, 'admin_role', $id);
 
         if ($valid)
         {
@@ -30,7 +30,7 @@ class m_role extends m_base
     }
 
     /** 获得一个用户的全部角色信息
-     * @roles string | array 要查询的角色列表，可以是字符串，用空格分割id，也可以是一个id数组
+     * @roles string 要查询的角色列表，可以是字符串，用空格分割id
      * @valid bool 是否包括无效的角色，例如 status 为 stop 的角色
      * @return bool | array
      */
@@ -59,10 +59,33 @@ class m_role extends m_base
     }
 
     /** 获得一个角色的全部权限
-     * @param $role
+     * @param int $role
      */
-    public function get_access($role, $refresh = FALSE)
+    public function get_access($roles, $refresh = FALSE)
     {
+        $data = [];
 
+        if (is_string($roles))
+        {
+            $roles = explode(',', $roles);
+        }
+        else
+        {
+            return $data;
+        }
+
+        foreach($roles as $role)
+        {
+            $role = $this->get($role, TRUE, $refresh);
+
+            $access = explode(',', $role['access']);
+
+            foreach ($access as $row)
+            {
+                $data[] = $this->edb->get_row_id($refresh, 'admin_access', $row);
+            }
+        }
+
+        return $data;
     }
 }

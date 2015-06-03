@@ -26,7 +26,7 @@ $config['cache_driver'] = 'file';   //缓冲驱动
 $config['title'] = '测试';   //系统默认标题
 
 //单位 秒
-$config['expiration']   = 300;                   //验证码超时
+$config['expiration']   = 300;                //验证码超时
 $config['data_timeout'] = 3600;           //数据缓存过期 86400一天    604800一周
 
 //Upload 设置
