@@ -97,6 +97,10 @@ class m_user extends m_base
         return $query->result_array();
     }
 
+    /** 切换用户账户状态
+     * @param $id
+     * @return int
+     */
     public function toggle($id)
     {
         $enum = $this->edb->enum('admin', 'status');
@@ -118,5 +122,7 @@ class m_user extends m_base
         $data['status'] = ($index + 1) % count($enum) + 1;
 
         $this->edb->set_row_id('admin', $data, $id);
+
+        return $data['status'];
     }
 }

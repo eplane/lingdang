@@ -26,4 +26,33 @@ class Test extends CI_Controller
         var_dump($str);
         var_dump($zip);
     }
+
+    public function mongo()
+    {
+        $this->load->library('CI_Mongo', 'mongo');
+
+        var_dump($this->mongo);
+
+        $posts = $this->mongo->db->posts->find();
+
+        foreach ($posts as $id => $post)
+        {
+            var_dump($id);
+            var_dump($post);
+        }
+    }
+
+    public function log()
+    {
+        $this->log->write(1, '测试');
+        $this->log->write(2, '测试');
+        $this->log->write(3, '测试');
+        $this->log->write(4, '测试');
+        $this->log->write(5, '测试');
+
+        $str = $this->log->read('2015-06-04');
+
+        $str = str_replace("\r\n", '<br>', $str);
+        echo $str;
+    }
 }

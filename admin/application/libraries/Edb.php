@@ -8,11 +8,11 @@
 
 class Edb
 {
-    private $last_query = NULL;
+    protected $last_query = NULL;
 
-    private $db;
+    protected $db;
 
-    private $ci;
+    protected $ci;
 
     public function __construct()
     {
@@ -251,7 +251,7 @@ class Edb
 
         $key = $table . $id;
 
-        $this->ci->cache->delete($key);
+        return $this->ci->cache->delete($key);
     }
 
     /** 查询并缓存一个值，需要注意同步问题。

@@ -8,14 +8,14 @@
 | 除base_url外其他的重要路径
 |
 */
-$config['other_path']['js']       = 'resource/js/';
-$config['other_path']['img']      = 'resource/image/';
-$config['other_path']['css']      = 'resource/css/';
-$config['other_path']['less']     = 'resource/less/';
+$config['other_path']['js'] = 'resource/js/';
+$config['other_path']['img'] = 'resource/image/';
+$config['other_path']['css'] = 'resource/css/';
+$config['other_path']['less'] = 'resource/less/';
 
-$config['other_path']['common-js']     = '../resource/js/';
-$config['other_path']['common-css']     = '../resource/css/';
-$config['other_path']['common-img']     = '../resource/image/';
+$config['other_path']['common-js'] = '../resource/js/';
+$config['other_path']['common-css'] = '../resource/css/';
+$config['other_path']['common-img'] = '../resource/image/';
 
 $config['captcha_path'] = '../resource/temp/';
 
@@ -26,20 +26,19 @@ $config['cache_driver'] = 'file';   //缓冲驱动
 $config['title'] = '测试';   //系统默认标题
 
 //单位 秒
-$config['expiration']   = 300;                //验证码超时
+$config['expiration'] = 300;                //验证码超时
 $config['data_timeout'] = 3600;           //数据缓存过期 86400一天    604800一周
 
 //Upload 设置
-$config['upload']['upload_path']   = APPPATH . '../../resource/upload/';     //上传文件的根目录
-$config['upload']['temp_path']     = APPPATH . '../../resource/temp/';     //上传文件的临时目录
-$config['upload']['web_root']      = 'http://localhost/dog/resource/upload/';       //文件的外部访问根目录
+$config['upload']['upload_path'] = APPPATH . '../../resource/upload/';     //上传文件的根目录
+$config['upload']['temp_path'] = APPPATH . '../../resource/temp/';     //上传文件的临时目录
+$config['upload']['web_root'] = 'http://localhost/dog/resource/upload/';       //文件的外部访问根目录
 $config['upload']['allowed_types'] = 'gif|jpg|png';
-$config['upload']['max_size']      = '1000';     //单位 K
-$config['upload']['encrypt_name']  = TRUE;  //不允许自动改名
+$config['upload']['max_size'] = '1000';     //单位 K
+$config['upload']['encrypt_name'] = TRUE;  //不允许自动改名
 
 
-//log设置, log类会在这个目录下建立日志文件
-$config['log']['file'] = APPPATH. 'logs/';
+
 
 
 /*
@@ -61,20 +60,20 @@ $config['log']['file'] = APPPATH. 'logs/';
 | service-email：发送者
 | service-name：发送者名称
 */
-$config['email']['protocol']      = 'smtp';
-$config['email']['smtp_host']     = 'ssl://smtp.qq.com';
-$config['email']['smtp_user']     = '9475127@qq.com';
-$config['email']['smtp_pass']     = 'yrgtqh39db';
-$config['email']['smtp_port']     = '465';
-$config['email']['smtp_timeout']  = '5';
-$config['email']['newline']       = "\r\n";
-$config['email']['crlf']          = "\r\n";
-$config['email']['mailtype']      = 'html';
-$config['email']['charset']       = 'utf-8';
-$config['email']['wordwrap']       = TRUE;
-$config['email']['wrapchars']       = 76;
+$config['email']['protocol'] = 'smtp';
+$config['email']['smtp_host'] = 'ssl://smtp.qq.com';
+$config['email']['smtp_user'] = '9475127@qq.com';
+$config['email']['smtp_pass'] = 'yrgtqh39db';
+$config['email']['smtp_port'] = '465';
+$config['email']['smtp_timeout'] = '5';
+$config['email']['newline'] = "\r\n";
+$config['email']['crlf'] = "\r\n";
+$config['email']['mailtype'] = 'html';
+$config['email']['charset'] = 'utf-8';
+$config['email']['wordwrap'] = TRUE;
+$config['email']['wrapchars'] = 76;
 $config['email']['service-email'] = 'li-lf@qq.com';         //发送者
-$config['email']['service-name']  = '系统服务';                //发送者名称
+$config['email']['service-name'] = '系统服务';                //发送者名称
 
 /*
 |--------------------------------------------------------------------------
@@ -90,12 +89,12 @@ $config['email']['service-name']  = '系统服务';                //发送者�
 | fore：前景色
 */
 $config['qrcode']['logo'] = 'http://localhost/wz/admin/resource/temp/96C710AC48FAFD1C11CCE7A17E6DADD1.jpg';
-$config['qrcode']['level']     = 'H';
-$config['qrcode']['size']      = 6;
-$config['qrcode']['margin']    = 1;
-$config['qrcode']['path']      = 'resource/temp/';
-$config['qrcode']['back']      = '255,255,255';
-$config['qrcode']['fore']      = '0,0,0';
+$config['qrcode']['level'] = 'H';
+$config['qrcode']['size'] = 6;
+$config['qrcode']['margin'] = 1;
+$config['qrcode']['path'] = 'resource/temp/';
+$config['qrcode']['back'] = '255,255,255';
+$config['qrcode']['fore'] = '0,0,0';
 $config['qrcode']['logo_size'] = 1 / 5;
 
 
@@ -108,3 +107,14 @@ $config['qrcode']['logo_size'] = 1 / 5;
 */
 $config['curl']['url'] = '';
 $config['curl']['cert'] = '';
+
+
+/*
+|--------------------------------------------------------------------------
+| mongo 配置
+|--------------------------------------------------------------------------
+| url：连接地址
+| cert：证书地址，需要服务器物理路径，不是URL路径
+*/
+$config['mongo']['server'] = 'localhost';
+$config['mongo']['db'] = 'bell';

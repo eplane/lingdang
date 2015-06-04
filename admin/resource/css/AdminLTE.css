@@ -3403,3 +3403,11 @@ fieldset[disabled] .btn-vk.active {
   color: #587ea3;
   background-color: #ffffff;
 }
+
+/* Add By LLF*/
+.mini
+{
+    padding: 0 0px;
+    font-size: 14px;
+    vertical-align:inherit;
+}

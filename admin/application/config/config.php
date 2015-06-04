@@ -224,6 +224,11 @@ $config['log_threshold'] = 0;
 */
 $config['log_path'] = '';
 
+//log设置, log类会在这个目录下建立日志文件
+$config['log']['file'] = APPPATH . 'logs/';
+$config['log']['level'] = 3; // 记录级别，设置为1，则全部记录： 1 信息，2 提示，3 警告，4 错误，5 严重错误
+$config['log']['drive'] = 'file'; //记录方式， file，mongo
+
 /*
 |--------------------------------------------------------------------------
 | Log File Extension
