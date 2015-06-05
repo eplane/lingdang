@@ -9,6 +9,18 @@ class Ajax extends Controller_base
         parent::__construct();
     }
 
+    private function url($list)
+    {
+        $referer = $this->input->server('HTTP_REFERER');
+
+        if (in_array($referer, $list))
+        {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
     private function send($array)
     {
         echo json_encode($array);
@@ -19,12 +31,22 @@ class Ajax extends Controller_base
      */
     public function admin_toggle()
     {
-        $id = $this->input->post('id');
+        //请求地址过滤
+        $urls[] = base_url() . 'user/admins.html';
 
-        $this->load->model('m_user', 'muser');
+        if (FALSE == $this->url($urls))
+            exit('1');
 
-        $status = $this->muser->toggle($id);
+        //权限过滤
+        if (TRUE === $this->is_permit('用户状态'))
+        {
+            $id = $this->input->post('id');
 
-        $this->send(array('result' => 0, 'data' => $status));
+            $this->load->model('m_user', 'muser');
+
+            $status = $this->muser->toggle($id);
+
+            $this->send(array('result' => 0, 'data' => $status));
+        }
     }
 }

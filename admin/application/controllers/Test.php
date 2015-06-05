@@ -29,30 +29,36 @@ class Test extends CI_Controller
 
     public function mongo()
     {
-        $this->load->library('CI_Mongo', 'mongo');
+        $this->load->library('CI_Mongo', NULL, 'mongo');
 
-        var_dump($this->mongo);
+        $this->location->ip();
 
-        $posts = $this->mongo->db->posts->find();
+        $r = $this->mongo->get('log');
 
-        foreach ($posts as $id => $post)
-        {
-            var_dump($id);
-            var_dump($post);
-        }
+        $a = $r->result_array();
+
+        //var_dump(json_decode($a[0]['msg'], TRUE));
+        var_dump($a);
+
+        /*$r = $this->mongo->get_where('log', array("_id"=>new MongoId('557116c208a9e95812000032')));
+
+        var_dump($r->result_array());*/
     }
 
     public function log()
     {
-        $this->log->write(1, '测试');
-        $this->log->write(2, '测试');
-        $this->log->write(3, '测试');
-        $this->log->write(4, '测试');
-        $this->log->write(5, '测试');
+        $this->load->library('CI_Mongo', NULL, 'mongo');
 
-        $str = $this->log->read('2015-06-04');
+        $data['user'] = '000001';
+        $data['option'] = '测试';
+        $data['active'] = '执行了某个命令';
 
-        $str = str_replace("\r\n", '<br>', $str);
-        echo $str;
+        $this->log->write(3, $data, $this->mongo);
+
+        $str = $this->log->read('2015-06-05', $this->mongo);
+
+
+        /* $str = str_replace("\r\n", '<br>', $str);*/
+        var_dump($str);
     }
 }

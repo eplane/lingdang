@@ -28,13 +28,13 @@ class Location
         $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);
         if (empty($res))
         {
-            return false;
+            return FALSE;
         }
         $jsonMatches = array();
         preg_match('#\{.+?\}#', $res, $jsonMatches);
         if (!isset($jsonMatches[0]))
         {
-            return false;
+            return FALSE;
         }
         $json = json_decode($jsonMatches[0], true);
         if (isset($json['ret']) && $json['ret'] == 1)
@@ -44,7 +44,7 @@ class Location
         }
         else
         {
-            return false;
+            return FALSE;
         }
         return $json;
     }

@@ -7,6 +7,7 @@ class Controller_base extends CI_Controller
         parent::__construct();
 
         $this->load->model('m_role', 'mrole');
+        $this->load->library('CI_Mongo', NULL, 'mongo');
 
         if (FALSE == $this->is_login())
         {
@@ -64,6 +65,11 @@ class Controller_base extends CI_Controller
                     return TRUE;
                 }
             }
+        }
+
+        if( $jump )
+        {
+            redirect(base_url() . 'main/error.html');
         }
 
         return FALSE;

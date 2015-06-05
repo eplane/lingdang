@@ -9,21 +9,21 @@
 
 class File
 {
-    private $CI;
+    private $ci;
 
     public function __construct()
     {
-        $this->CI =& get_instance();
-        //$this->CI->load->database();
+        $this->ci =& get_instance();
+        //$this->ci->load->database();
 
-        $this->CI->load->library('Guid');
+        $this->ci->load->library('Guid');
     }
 
     //保存文件
     public function upload($file, $types = NULL, $size = NULL)
     {
         //删除连续上传的重复文件
-        $last_file = $this->CI->session->$file;
+        $last_file = $this->ci->session->$file;
 
         if (NULL != $last_file && file_exists($last_file['fullpath'] . $last_file['file']))
         {
@@ -31,7 +31,7 @@ class File
         }
 
         //保存文件到 temp
-        $config = $this->CI->config->item('upload');        //获取默认配置
+        $config = $this->ci->config->item('upload');        //获取默认配置
         $config['upload_path'] = $config['temp_path'];     //将临时路径设置成目标路径
 
         if (NULL != $size)
@@ -40,27 +40,27 @@ class File
         if (NULL != $types)
             $config['allowed_types'] = $types;           //设置允许文件类型
 
-        $this->CI->load->library('upload', $config);
+        $this->ci->load->library('upload', $config);
 
         $result = array();
 
-        if (!$this->CI->upload->do_upload($file))
+        if (!$this->ci->upload->do_upload($file))
         {
             $result['error'] = 'TRUE';
             $result['method'] = 'save';
-            $result['message'] = $this->CI->upload->display_errors();
+            $result['message'] = $this->ci->upload->display_errors();
             return $result;
         }
         else
         {
-            $data = array('upload_data' => $this->CI->upload->data());
+            $data = array('upload_data' => $this->ci->upload->data());
 
             //保存文件信息，供后面处理数据使用
             $cache['file'] = $data['upload_data']['file_name'];
             $cache['fullpath'] = $data['upload_data']['file_path'];
             //var_dump($cache);
 
-            $this->CI->session->$file = $cache;
+            $this->ci->session->$file = $cache;
 
             $result['error'] = 'FALSE';
             $result['data'] = $data['upload_data'];
@@ -82,7 +82,7 @@ class File
      */
     public function img_crop($filedata, $filesession, $x, $y, $w, $h, $iw, $ih)
     {
-        $this->CI->load->library('image_lib');  //加载图像处理库
+        $this->ci->load->library('image_lib');  //加载图像处理库
 
         $sx = $filedata['image_width'] / $iw;
         $sy = $filedata['image_height'] / $ih;
@@ -99,15 +99,15 @@ class File
         $config['width'] = $w * $sx;
         $config['height'] = $h * $sy;
 
-        $this->CI->image_lib->initialize($config);
+        $this->ci->image_lib->initialize($config);
 
         $result = array();
 
-        if (!$this->CI->image_lib->crop())
+        if (!$this->ci->image_lib->crop())
         {
             $result['error'] = 'TRUE';
             $result['method'] = 'resize';
-            $result['message'] = $this->CI->image_lib->display_errors();
+            $result['message'] = $this->ci->image_lib->display_errors();
         }
         else
         {
@@ -115,7 +115,7 @@ class File
             $cache['file'] = $filename . $filedata['file_ext'];
             $cache['fullpath'] = $filedata['file_path'];
             //var_dump($cache);
-            $this->CI->session->$filesession = $cache;
+            $this->ci->session->$filesession = $cache;
 
             $filedata['file_name'] = $filename . $filedata['file_ext'];
             $filedata['raw_name'] = $filename;
@@ -166,7 +166,7 @@ class File
                     mkdir($path);
                 }
 
-                $c = $this->CI->config->item('upload');     //获取文件上传根目录
+                $c = $this->ci->config->item('upload');     //获取文件上传根目录
 
                 if (rename($c['temp_path'] . $filename, $path . $file_name . $ext))
                 {
@@ -217,7 +217,7 @@ class File
 
     private function get_path($file)
     {
-        $c = $this->CI->config->item('upload');     //获取文件上传根目录
+        $c = $this->ci->config->item('upload');     //获取文件上传根目录
 
         $path = $c['upload_path'] . substr($file, 0, 8) . '/';
 
@@ -226,7 +226,7 @@ class File
 
     public function get_file($filename)
     {
-        $c = $this->CI->config->item('upload');     //获取文件上传根目录
+        $c = $this->ci->config->item('upload');     //获取文件上传根目录
 
         $path = $c['web_root'] . substr($filename, 0, 8) . '/';
 

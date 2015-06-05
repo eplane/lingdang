@@ -245,6 +245,13 @@ class Edb
         return $data;
     }
 
+
+    /** 更新数据库中的一行，同时清除缓存
+     * @param $table
+     * @param $data
+     * @param $id
+     * @return mixed
+     */
     public function set_row_id($table, $data, $id)
     {
         $this->update($table, $data, '`id` = ' . $id);

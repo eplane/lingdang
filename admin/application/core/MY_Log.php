@@ -3,7 +3,9 @@
 /**
  * 日志类
  *
+ *  支持文件和mongo
  *
+ * TODO mongo将所有的数据都写在一个集合里了，应该每年换一个
  *
  * ---------------------------------[更新列表]---------------------------------
  */
@@ -11,7 +13,9 @@ class  MY_Log extends CI_Log
 {
     protected $option;
 
-    private $file = NULL;
+    protected $file = NULL;
+
+    protected $ci;
 
     public function __construct()
     {
@@ -21,88 +25,103 @@ class  MY_Log extends CI_Log
 
         $this->option = $config['log'];
 
-
-        $date = date('Y-m-d', time());
-        $this->file = fopen($this->option['file'] . $date . '.txt', 'a');
-    }
-
-    public function write($level, $data)
-    {
-        if ($level >= $this->option['level'])
+        if ($this->option['drive'] == 'file')
         {
-            $str = $this->bulld($data, $level);
-            fwrite($this->file, $str);
+            $date = date('Y-m-d', time());
+            $this->file = fopen($this->option['file'] . $date . '.txt', 'a');
         }
     }
 
-    public function read($date)
+    public function write($level, $data, $mongo = NULL)
+    {
+        if ($level >= $this->option['level'])
+        {
+            $log = $this->build($data, $level);
+
+            if ($this->option['drive'] == 'file')
+            {
+                if (!!$this->file)
+                {
+                    if (is_array($log['data']))
+                    {
+                        $log['data'] = json_encode($log['data'], JSON_UNESCAPED_UNICODE);
+                    }
+
+                    fwrite($this->file, '[' . $log['level'] . ' : ' . $log['date'] . ' ' . $log['time'] . '] ' . $log['data'] . "\r\n");
+                }
+                else
+                {
+                    throw new Exception('Log file can not open !');
+                }
+            }
+            else if ($this->option['drive'] == 'mongo')
+            {
+                $mongo->insert("log", $log);
+            }
+
+            return $log;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    public function read($date, $mongo = NULL)
     {
         if (FALSE != strtotime($date))
         {
-            $file_name = $this->option['file'] . $date . '.txt';
-
-            if (file_exists($file_name))
+            if ($this->option['drive'] == 'file')
             {
-                return file_get_contents($file_name);
+                $file_name = $this->option['file'] . $date . '.txt';
+
+                if (file_exists($file_name))
+                {
+                    return file_get_contents($file_name);
+                }
+            }
+            else if ($this->option['drive'] == 'mongo')
+            {
+                return $mongo->get_where('log', array('date' => $date))->result_array();
             }
         }
 
         return FALSE;
     }
 
-    private function bulld($data, $level)
+    private function build($data, $level)
     {
-        $str = '';
+        $log['stamp'] = time();
+        $log['time'] = date('H:i:s', $log['stamp']);
+        $log['date'] = date('Y-m-d', $log['stamp']);
+        $log['data'] = $data;
 
         switch ($level)
         {
             case 1:
-                $str .= '[INFO:';
+                $log['level'] = 'INFO';
                 break;
 
             case 2:
-                $str .= '[NOTICE:';
+                $log['level'] = 'NOTICE';
                 break;
 
             case 3:
-                $str .= '[WARNING:';
+                $log['level'] = 'WARNING';
                 break;
 
             case 4:
-                $str .= '[ERROR:';
+                $log['level'] = 'ERROR';
                 break;
 
             case 5:
-                $str .= '[CRITICAL ERROR:';
+                $log['level'] = 'CRITICAL ERROR';
                 break;
 
             default:
-                $str .= '[UNKNOWN:';
+                $log['level'] = 'UNKNOWN';
         }
 
-        $str .= date('Y-m-d H:i:s]', time());
-
-        $str .= $this->bulld_data($data);
-
-        return $str . "\r\n";
-    }
-
-    private function bulld_data($data)
-    {
-        $str = '';
-
-        if (is_array($data))
-        {
-            foreach ($data as $k => $v)
-            {
-                $str .= $k . ':' . $v . '; ';
-            }
-        }
-        else if (is_string($data))
-        {
-            $str = $data;
-        }
-
-        return $str;
+        return $log;
     }
 }

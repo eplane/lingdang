@@ -26,20 +26,49 @@ class m_user extends m_base
             if ($user['status'] == '正常' && count($user['role']) > 0)
             {
                 //建立session
+                $user['ip'] = $this->location->ip();
                 $_SESSION['me'] = $user;
+
+                //操作日志
+                $log['action'] = 'login';
+                $log['id'] = $id;
+                $log['ip'] = $user['ip'];
+                $this->log->write(2, $log, $this->mongo);
+
                 return TRUE;
             }
             else
             {
+                //操作日志
+                $log['action'] = 'login';
+                $log['id'] = $id;
+                $log['ip'] = $this->location->ip();
+                $log['msg'] = '停用的账户尝试登陆';
+                $this->log->write(4, $log, $this->mongo);
+
                 return 2;//账户被停用;
             }
         }
+
+        //操作日志
+        $log['action'] = 'login';
+        $log['uid'] = $uid;
+        $log['password'] = $password;
+        $log['msg'] = '用户名或密码错误';
+        $log['ip'] = $this->location->ip();
+        $this->log->write(4, $log, $this->mongo);
 
         return 1; // 用户名或密码错误;
     }
 
     public function logout()
     {
+        //操作日志
+        $log['action'] = 'logout';
+        $log['id'] = $_SESSION['me']['id'];
+        $log['ip'] = $_SESSION['me']['ip'];
+        $this->log->write(1, $log, $this->mongo);
+
         $this->session->sess_destroy();
     }
 
@@ -122,6 +151,13 @@ class m_user extends m_base
         $data['status'] = ($index + 1) % count($enum) + 1;
 
         $this->edb->set_row_id('admin', $data, $id);
+
+        //日志
+        $log['action'] = 'user/toggle';
+        $log['me'] = $_SESSION['me']['id'];
+        $log['id'] = $id;
+        $log['status'] = $data['status'];
+        $this->log->write(2, $log, $this->mongo);
 
         return $data['status'];
     }

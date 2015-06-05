@@ -61,18 +61,13 @@ class User extends Controller_base
 
     public function admins()
     {
-        if (TRUE === $this->is_permit('浏览管理员'))
-        {
-            //路径导航条数据
-            $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '管理员列表' => ''];
+        $this->is_permit('用户浏览', TRUE);
 
-            $data['data'] = $this->muser->gets();
+        //路径导航条数据
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '管理员列表' => ''];
 
-            $this->view('admins', $data);
-        }
-        else
-        {
-            redirect(base_url() . 'main/error.html');
-        }
+        $data['data'] = $this->muser->gets();
+
+        $this->view('admins', $data);
     }
 }

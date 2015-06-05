@@ -1,6 +1,5 @@
 <link href="<?php echo get_path('css'); ?>datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
 
-
 <div class="box box-primary">
     <div class="box-header"><i class="fa fa-users"></i>
 
@@ -8,7 +7,8 @@
     <div class="box-body">
 
         <div style="margin-bottom:-30px;">
-            <a href="<?php echo base_url(); ?>admin/role/add.html" class="btn btn-default"><i class="fa fa-users"></i>
+            <a href="javascript:void(0);" class="btn btn-default" data-toggle="modal" data-target="#add-admin"><i
+                    class="fa fa-users"></i>
                 添加管理员</a>
         </div>
 
@@ -123,3 +123,57 @@
     }
 
 </script>
+
+
+
+<!-- 修改密码 -->
+<div class="modal fade" id="add-admin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加管理员</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+                    <form>
+                        <div  class="form-group">
+                            <div class="col-md-8">
+                                <label for="uid">用户名 </label>
+                                <input type="text" id="uid" name="uid" class="form-control" value="">
+                            </div>
+                        </div>
+
+                        <div  class="form-group">
+                            <div class="col-md-8">
+                                <label for="psw">密码 </label>
+                                <input type="password" id="psw" name="psw" class="form-control" value="">
+                            </div>
+                        </div>
+
+                        <div  class="form-group">
+                            <div class="col-md-8">
+                                <label for="email">Emial </label>
+                                <input type="text" id="email" name="email" class="form-control" value="">
+                            </div>
+                        </div>
+
+                        <div  class="form-group">
+                            <div class="col-md-8">
+                                <label for="mobile">手机 </label>
+                                <input type="text" id="mobile" name="mobile" class="form-control" value="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="change();">添加管理员</button>
+            </div>
+        </div>
+    </div>
+</div>

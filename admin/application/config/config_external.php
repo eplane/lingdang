@@ -111,10 +111,22 @@ $config['curl']['cert'] = '';
 
 /*
 |--------------------------------------------------------------------------
-| mongo 配置
+| Cimongo 配置
 |--------------------------------------------------------------------------
 | url：连接地址
 | cert：证书地址，需要服务器物理路径，不是URL路径
 */
-$config['mongo']['server'] = 'localhost';
-$config['mongo']['db'] = 'bell';
+$config['mongo']['host'] = "localhost";
+$config['mongo']['port'] = 27017;        // Generally 27017
+$config['mongo']['db'] = "bell";
+// Required if Mongo is running in auth mode
+$config['mongo']['user'] = "";
+$config['mongo']['password'] = "";
+
+//  默认FALSE .
+//  FALSE ： 程序执行中不会等待数据库请求返回（异步）
+// TRUE ： 程序将等待数据库请求返回，如果update请求没有返回succeed ，则跑出MongoCursorException异常
+$config['mongo']['query_safety'] = TRUE;
+
+//如果运行于身份验证模式，并且用户不具有全局读写权限，请设置为TRUE
+$config['mongo']['db_flag'] = FALSE;
