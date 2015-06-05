@@ -92,7 +92,7 @@ class m_user extends m_base
             if (isset($info['role']))
             {
                 $this->load->model('m_role', 'mrole');
-                $roles['role'] = $this->mrole->gets($info['role'], TRUE, $refresh);
+                $roles['role'] = $this->mrole->get_user_roles($info['role'], TRUE, $refresh);
             }
 
             $data = array_merge($login, $info, $roles);

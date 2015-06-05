@@ -69,7 +69,7 @@ class Controller_base extends CI_Controller
 
         if( $jump )
         {
-            redirect(base_url() . 'main/error.html');
+            //redirect(base_url() . 'main/error.html');
         }
 
         return FALSE;

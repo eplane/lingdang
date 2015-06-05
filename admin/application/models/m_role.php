@@ -29,12 +29,21 @@ class m_role extends m_base
         return $role;
     }
 
+    public function gets()
+    {
+        $this->db->select('*');
+        $this->db->from('admin_role');
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
     /** 获得一个用户的全部角色信息
      * @roles string 要查询的角色列表，可以是字符串，用空格分割id
      * @valid bool 是否包括无效的角色，例如 status 为 stop 的角色
      * @return bool | array
      */
-    public function gets($roles, $valid = TRUE, $refresh = FALSE)
+    public function get_user_roles($roles, $valid = TRUE, $refresh = FALSE)
     {
         $data = [];
 

@@ -1,43 +1,54 @@
-<link href="<?php echo css_path(); ?>datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo get_path('css'); ?>datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <div class="box box-primary">
 <div class="box-header"><i class="fa fa-users"></i><h3 class="box-title">职务列表</h3></div>
 	<div class="box-body">
 
+        <div style="width:70%">
+
 	<div style="margin-bottom:-30px;">
 	<a href="<?php echo base_url(); ?>admin/role/add.html" class="btn btn-default"><i class="fa fa-users"></i> 添加职务</a>
 	</div>
 	
-		<table id="rolelist" class="table table-bordered table-hover table-striped" style="width:100%;">
+		<table id="rolelist" class="table table-bordered table-hover table-striped">
 	        <thead>
 	            <tr>
 	            	<th>id</th>
 	                <th>名称</th>
-	                <th width="80">状态</th>
-	                <th width="120">创建日期</th>
-	                <th width="120">修改日期</th>
+	                <th>状态</th>
 	                <th width="40">操作</th>
 	            </tr>
 	        </thead>
+            <tbody>
+
+            <?php foreach ($data as $row): ?>
+                <tr>
+                    <td><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['name']; ?></td>
+                    <td><?php echo $row['status']; ?></td>
+                    <td></td>
+                </tr>
+            <?php endforeach; ?>
+
+            </tbody>
 		</table>
+
+        </div>
 
 	</div>
 </div>
 
 
 <!-- DATA TABES SCRIPT -->
-<script src="<?php echo js_path(); ?>plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
-<script src="<?php echo js_path(); ?>plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
-<script src="<?php echo js_path(); ?>plugins/datatables/cn.js" type="text/javascript"></script>
-<script src="<?php echo js_path(); ?>common.js" type="text/javascript"></script>
+<script src="<?php echo get_path('js'); ?>plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+<script src="<?php echo get_path('js'); ?>plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="<?php echo get_path('js'); ?>plugins/datatables/cn.js" type="text/javascript"></script>
+<script src="<?php echo get_path('js'); ?>common.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function() {
         $('#rolelist').dataTable({
-            "processing": true,
-        	"serverSide": true,
         	"bLengthChange": false,
         	"language" : ch,
-        	"ajax": {"url":"<?php echo base_url();?>admin/role/get_roles.html","type": "POST"},
         	"columnDefs": [
         		{
         			"name":"id",
@@ -53,37 +64,10 @@
                     	return str;
                 	}
 	            },
-	            {
-	            	"name":"status",
-	                "targets": [ 2 ],
-	                "render": function ( data, type, row ) {
-						var str = '未知';
-                		switch(data)
-                		{
-                			case "normal": str = "正常"; break;
-                			case "stop": str = "停用"; break;
-                			case "delete": str = "删除"; break;
-                		}
-                    	return str;
-                	}
-	            },
-	            {
-	            	"name":"create",
-	                "targets": [ 3 ],
-	                "render": function ( data, type, row ) {
-                    	return unix2time(data);
-                	}
-	            },
-	            {
-	            	"name":"update",
-	                "targets": [ 4 ],
-	                "render": function ( data, type, row ) {
-                    	return unix2time(data);
-                	}
-	            },
+
 	            {
 	            	"name":"tool",
-	                "targets": [ 5 ],
+	                "targets": [ 3 ],
 	                "searchable": false,
 	                "orderable":false,
 	                "render": function ( data, type, row ) {

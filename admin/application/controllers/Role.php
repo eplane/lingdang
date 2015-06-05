@@ -18,7 +18,9 @@ class Role extends Controller_base
 
         $data['data'] = $this->mrole->gets();
 
-        $this->view('roles', $data);
+        //var_dump($data['data']);
+
+        $this->view('role_list', $data);
     }
 
 }

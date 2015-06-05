@@ -1,2 +1,4 @@
 http://plugins.krajee.com/file-input/demo
 文件上传插件
+
+Varnish 页面片段缓存

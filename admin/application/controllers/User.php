@@ -59,7 +59,7 @@ class User extends Controller_base
         }
     }
 
-    public function admins()
+    public function users()
     {
         $this->is_permit('用户浏览', TRUE);
 
@@ -68,6 +68,6 @@ class User extends Controller_base
 
         $data['data'] = $this->muser->gets();
 
-        $this->view('admins', $data);
+        $this->view('user_list', $data);
     }
 }
