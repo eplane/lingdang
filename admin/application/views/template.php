@@ -111,7 +111,7 @@
                     <ul class="treeview-menu">
                         <li><a href="<?php echo base_url(); ?>user/users.html"><i class="fa fa-angle-double-right"></i>管理员列表</a></li>
                         <li><a href="<?php echo base_url(); ?>role/roles.html"><i class="fa fa-angle-double-right"></i>角色列表</a></li>
-                        <li><a href="<?php echo base_url(); ?>admin/role/add.html"><i class="fa fa-angle-double-right"></i>权限列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>role/access.html"><i class="fa fa-angle-double-right"></i>权限列表</a></li>
                     </ul>
                 </li>
 

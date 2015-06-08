@@ -20,7 +20,7 @@ class m_role extends m_base
 
         if ($valid)
         {
-            if ($role['status'] == 'stop')
+            if ($role['status'] == '停用')
             {
                 return FALSE;
             }
