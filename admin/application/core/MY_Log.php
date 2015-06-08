@@ -56,7 +56,7 @@ class  MY_Log extends CI_Log
             }
             else if ($this->option['drive'] == 'mongo')
             {
-                $mongo->insert("log", $log);
+                $mongo->insert($this->option['name'], $log);
             }
 
             return $log;

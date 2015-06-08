@@ -228,7 +228,7 @@ $config['log_path'] = '';
 $config['log']['file'] = APPPATH . 'logs/';
 $config['log']['level'] = 1; // 记录级别，设置为1，则全部记录： 1 信息，2 提示，3 警告，4 错误，5 严重错误
 $config['log']['drive'] = 'mongo'; //记录方式， file，mongo
-
+$config['log']['name'] = 'admin_log';   //记录名称
 /*
 |--------------------------------------------------------------------------
 | Log File Extension
@@ -362,10 +362,10 @@ $config['encryption_key'] = '0234567a';
 */
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'cs';
-$config['sess_expiration'] = 600;
+$config['sess_expiration'] = 6000;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 200;
+$config['sess_time_to_update'] = 1000;
 $config['sess_regenerate_destroy'] = FALSE;
 
 /*

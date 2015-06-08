@@ -28,7 +28,7 @@
     <!-- jQuery 2.1.3 -->
     <script src="<?php echo get_path('js'); ?>jquery-2.1.3.min.js"></script>
     <!-- jQuery UI 1.10.3 -->
-    <script src="<?php echo get_path('js'); ?>jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!--    <script src="<?php /*echo get_path('js'); */?>jquery-ui-1.10.3.min.js" type="text/javascript"></script>-->
     <!-- Bootstrap -->
     <script src="<?php echo get_path('js'); ?>bootstrap.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
@@ -111,7 +111,6 @@
                     <ul class="treeview-menu">
                         <li><a href="<?php echo base_url(); ?>user/users.html"><i class="fa fa-angle-double-right"></i>管理员列表</a></li>
                         <li><a href="<?php echo base_url(); ?>role/roles.html"><i class="fa fa-angle-double-right"></i>角色列表</a></li>
-                        <li><a href="<?php echo base_url(); ?>role/access.html"><i class="fa fa-angle-double-right"></i>权限列表</a></li>
                     </ul>
                 </li>
 

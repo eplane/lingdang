@@ -29,7 +29,7 @@ class m_role extends m_base
         return $role;
     }
 
-    public function gets()
+    public function gets($refresh = FALSE)
     {
         $this->db->select('*');
         $this->db->from('admin_role');
@@ -83,7 +83,7 @@ class m_role extends m_base
             return $data;
         }
 
-        foreach($roles as $role)
+        foreach ($roles as $role)
         {
             $role = $this->get($role, TRUE, $refresh);
 
@@ -96,5 +96,27 @@ class m_role extends m_base
         }
 
         return $data;
+    }
+
+    public function access($refresh = FALSE)
+    {
+        $this->db->select('*');
+        $this->db->from('admin_access');
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function add($data)
+    {
+        return $this->edb->insert_row('admin_role', $data);
+    }
+
+    public function set($id, $data)
+    {
+        if (isset($data['id']))
+            unset($data['id']);
+
+        return $this->edb->set_row_id('admin_role', $data, $id);
     }
 }

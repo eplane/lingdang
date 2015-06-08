@@ -16,8 +16,7 @@
     <!-- Theme style -->
     <link href="<?php echo get_path('css'); ?>AdminLTE.css" rel="stylesheet" type="text/css"/>
 
-    <link href="<?php echo get_path('js'); ?>plugins/easyform/easyform.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="<?php echo get_path('common-js'); ?>easyform/easyform.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,7 +61,7 @@
 <!--<script src="<?php /*echo get_path('common-js'); */?>jquery.language/jquery.language.js"
         type="text/javascript"></script>-->
 
-<script src="<?php echo get_path('js'); ?>plugins/easyform/easyform.js" type="text/javascript"></script>
+<script src="<?php echo get_path('common-js'); ?>easyform/easyform.js" type="text/javascript"></script>
 
 <script>
 

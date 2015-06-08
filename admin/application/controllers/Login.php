@@ -14,7 +14,7 @@ class Login extends CI_Controller
      */
     public function index()
     {
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper('form');
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('uid', '登录', 'callback__login[' . $this->input->post('password') . ']');

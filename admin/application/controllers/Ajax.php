@@ -49,4 +49,25 @@ class Ajax extends Controller_base
             $this->send(array('result' => 0, 'data' => $status));
         }
     }
+
+    public function role_toggle()
+    {
+        //请求地址过滤
+        $urls[] = base_url() . 'role/roles.html';
+
+        if (FALSE == $this->url($urls))
+            exit('1');
+
+        //权限过滤
+        if (TRUE === $this->is_permit('角色修改'))
+        {
+            $id = $this->input->post('id');
+
+            $this->load->model('m_user', 'muser');
+
+            $status = $this->muser->toggle($id);
+
+            $this->send(array('result' => 0, 'data' => $status));
+        }
+    }
 }

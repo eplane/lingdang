@@ -9,7 +9,7 @@
         <div style="width:70%">
 
             <div style="margin-bottom:-30px;">
-                <a href="<?php echo base_url(); ?>admin/role/add.html" class="btn btn-default"><i
+                <a href="<?php echo base_url(); ?>role/add.html" class="btn btn-default"><i
                         class="fa fa-users"></i> 添加角色</a>
             </div>
 
@@ -18,8 +18,8 @@
                 <tr>
                     <th>id</th>
                     <th>名称</th>
-                    <th>状态</th>
-                    <th width="40">操作</th>
+                    <th width="40">状态</th>
+                    <th width="30">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@
                     "targets": [1],
                     "render": function (data, type, row)
                     {
-                        var str = "<a href=\"<?php echo base_url();?>admin/role/stuff/" + row[0] + ".html\" title=\"点击职务名称可以向该职务添加员工\">" + data + "</a>";
+                        var str = "<a href=\"<?php echo base_url();?>role/edit/" + row[0] + ".html\" title=\"编辑角色\">" + data + "</a>";
                         return str;
                     }
                 },
@@ -77,13 +77,12 @@
                     "orderable": false,
                     "render": function (data, type, row)
                     {
-                        var html = '<a title="编辑" href="<?php echo base_url();?>admin/role/edit/' + row[0] + '.html"><i class="fa fa-fw fa-edit"></i></a>';
-                        html += '<a title="员工列表" href="<?php echo base_url();?>admin/role/stuff/' + row[0] + '.html"><i class="fa fa-fw fa-list"></i></a>';
+                        var html;
 
-                        if (row[5] == "正常")
-                            html += '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-ban"></i></button>';
+                        if (row[2] == "正常")
+                            html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-ban"></i></button>';
                         else
-                            html += '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-check"></i></button>';
+                            html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-check"></i></button>';
 
                         return html;
                     }
