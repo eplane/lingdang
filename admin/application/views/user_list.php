@@ -73,9 +73,9 @@
                 "render": function (data, type, row) {
 
                     if (row[5] == "正常")
-                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-ban"></i></button>';
+                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用账户"><i class="fa fa-fw fa-ban"></i></button>';
                     else
-                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-check"></i></button>';
+                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用账户"><i class="fa fa-fw fa-check"></i></button>';
 
                     return html;
                 }

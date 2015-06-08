@@ -77,12 +77,10 @@
                     "orderable": false,
                     "render": function (data, type, row)
                     {
-                        var html;
-
                         if (row[2] == "正常")
-                            html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-ban"></i></button>';
+                            html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用角色"><i class="fa fa-fw fa-ban"></i></button>';
                         else
-                            html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');"><i class="fa fa-fw fa-check"></i></button>';
+                            html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用角色"><i class="fa fa-fw fa-check"></i></button>';
 
                         return html;
                     }
