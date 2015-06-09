@@ -61,7 +61,7 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <a href="#"><img
+                            <a href="<?php echo base_url();?>user/me.html"><img
                                 src="<?php echo get_file($_SESSION['me']['avatar'], get_path('common-img') . 'avatar.jpg'); ?>"
                                 class="img-circle avatar" alt="User Image"
                                 onclick="javascript:window.location.href='<?php echo base_url(); ?>admin/user/me.html';"

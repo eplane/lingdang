@@ -16,7 +16,10 @@ class User extends Controller_base
      */
     public function me()
     {
-        $user = $this->session->user;
+        //路径导航条数据
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '个人资料' => ''];
+
+        $data['user'] = $this->session->me;
 
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
@@ -24,38 +27,33 @@ class User extends Controller_base
         $data['title'] = '我的信息';
         $data['sub_title'] = '管理自己的平台信息';
 
-        $data['user'] = $user;
-        $data['user']['birthday'] = date('Y/m/d', $data['user']['birthday']);
-
         if ($this->form_validation->run() == FALSE)
         {
-            $this->view('me', $data);
+            $this->view('user_me', $data);
         }
         else
         {
             //保存角色信息
             $submit['name'] = $this->input->post('name');
-            $submit['nickname'] = $this->input->post('nickname');
+            $submit['nickname'] = $this->input->post('nick');
             $submit['mobile'] = $this->input->post('mobile');
             $submit['email'] = $this->input->post('email');
-            $submit['birthday'] = strtotime($this->input->post('birthday'));
-            $submit['sex'] = $this->input->post('sex');
 
-            $this->load->library('Efile');
+            $this->load->library('file');
 
-            $result = $this->efile->upload('avatar-file', NULL, 500);    //接收客户端文件
+            $result = $this->file->upload('avatar', NULL, 500);    //接收客户端文件
 
             //如果修改了头像
             if ($result['error'] === 'FALSE')
             {
-                $submit['avatar'] = $this->efile->save('avatar-file');     //保存文件
+                $submit['avatar'] = $this->file->save('avatar');     //保存文件
             }
 
-            $this->muser->save($user['id'], $submit);
+            $this->muser->save($data['user']['id'], $submit);
 
             $data['user'] = $this->session->user;
 
-            $this->view('me', $data);
+            $this->view('user_me', $data);
         }
     }
 
@@ -69,5 +67,45 @@ class User extends Controller_base
         $data['data'] = $this->muser->gets();
 
         $this->view('user_list', $data);
+    }
+
+    public function add()
+    {
+        $this->is_permit('用户添加', TRUE);
+
+        $this->load->library('form_validation');
+        $this->load->helper('form');
+
+        //路径导航条数据
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '添加用户' => ''];
+
+        $data['role'] = $this->mrole->gets();
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->view('user_add', $data);
+        }
+        else
+        {
+            $user['uid'] = $this->input->post('uid');
+            $user['psw'] = $this->input->post('psw');
+            $user['mobile'] = $this->input->post('mobile');
+            $user['email'] = $this->input->post('email');
+            $user['role'] = implode(',', $this->input->post('role'));
+            //var_dump($user);
+
+            $this->muser->add($user);
+
+            redirect(base_url() . 'user/users.html');
+        }
+    }
+
+    public function delete($id)
+    {
+        $this->is_permit('用户删除', TRUE);
+
+        $this->muser->delete($id);
+
+        redirect(base_url() . 'user/users.html');
     }
 }

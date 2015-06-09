@@ -21,11 +21,6 @@ class Role extends Controller_base
         $this->view('role_list', $data);
     }
 
-    public function role()
-    {
-
-    }
-
     private function _role($data, $id = 0, $cmd = 'add')
     {
         $this->load->library('form_validation');

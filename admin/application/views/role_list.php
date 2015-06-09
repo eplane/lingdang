@@ -48,46 +48,41 @@
 <script src="<?php echo get_path('js'); ?>plugins/datatables/cn.js" type="text/javascript"></script>
 <script src="<?php echo get_path('js'); ?>common.js" type="text/javascript"></script>
 <script type="text/javascript">
-    $(function ()
-    {
-        $('#rolelist').dataTable({
-            "bLengthChange": false,
-            "language": ch,
-            "columnDefs": [
-                {
-                    "name": "id",
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                },
-                {
-                    "name": "name",
-                    "targets": [1],
-                    "render": function (data, type, row)
-                    {
-                        var str = "<a href=\"<?php echo base_url();?>role/edit/" + row[0] + ".html\" title=\"编辑角色\">" + data + "</a>";
-                        return str;
-                    }
-                },
-
-                {
-                    "name": "tool",
-                    "targets": [3],
-                    "searchable": false,
-                    "orderable": false,
-                    "render": function (data, type, row)
-                    {
-                        if (row[2] == "正常")
-                            html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用角色"><i class="fa fa-fw fa-ban"></i></button>';
-                        else
-                            html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用角色"><i class="fa fa-fw fa-check"></i></button>';
-
-                        return html;
-                    }
+    var table = $('#rolelist').dataTable({
+        "bLengthChange": false,
+        "language": ch,
+        "columnDefs": [
+            {
+                "name": "id",
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "name": "name",
+                "targets": [1],
+                "render": function (data, type, row) {
+                    var str = "<a href=\"<?php echo base_url();?>role/edit/" + row[0] + ".html\" title=\"编辑角色\">" + data + "</a>";
+                    return str;
                 }
-            ]
-        });
-    });
+            },
+
+            {
+                "name": "tool",
+                "targets": [3],
+                "searchable": false,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    if (row[2] == "正常")
+                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');role_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用角色"><i class="fa fa-fw fa-ban"></i></button>';
+                    else
+                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');role_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用角色"><i class="fa fa-fw fa-check"></i></button>';
+
+                    return html;
+                }
+            }
+        ]
+    }).api();
 </script>
 
 <!-- 删除确认 -->
@@ -113,11 +108,9 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function ($)
-    {
+    $(document).ready(function ($) {
 
-        $('#delete-role').on('show.bs.modal', function (event)
-        {
+        $('#delete-role').on('show.bs.modal', function (event) {
 
             var button = $(event.relatedTarget)
             var id = button.data('id')
@@ -129,10 +122,44 @@
         });
     });
 
-    function del()
-    {
-        var id = $("#del-role-id").html();
-        window.location.href = "<?php echo base_url();?>admin/role/delete/" + id + ".html";
+    function role_toggle(id) {
+
+        var bt = $("._click");
+        $(bt).attr("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url();?>ajax/role_toggle.html",
+            data: "id=" + id,
+            dataType: "json",
+            success: function (data) {
+
+                if (data.result == 0) {
+                    var icon = $("._click i");
+                    var bt = $("._click");
+                    var row = table.row(bt.parent().parent()).index();
+
+                    if (data.data == 1) {
+                        icon.removeClass("fa-check").addClass("fa-ban");
+                        bt.removeClass("btn-success").addClass("btn-danger");
+                        table.cell(row, 2).data("正常");
+                    }
+                    else if (data.data == 2) {
+                        icon.removeClass("fa-ban").addClass("fa-check");
+                        bt.removeClass("btn-danger").addClass("btn-success");
+                        table.cell(row, 2).data("停用");
+                    }
+                }
+            },
+            error: function (msg) {
+
+            },
+            complete: function () {
+                $("._click").removeAttr("disabled");
+                $("._click").removeClass("_click");
+            }
+        })
     }
+
 
 </script>

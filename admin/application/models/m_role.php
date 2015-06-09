@@ -31,8 +31,7 @@ class m_role extends m_base
 
     public function gets($refresh = FALSE)
     {
-        $this->db->select('*');
-        $this->db->from('admin_role');
+        $this->db->select('*')->from('admin_role');
         $query = $this->db->get();
 
         return $query->result_array();
@@ -100,8 +99,7 @@ class m_role extends m_base
 
     public function access($refresh = FALSE)
     {
-        $this->db->select('*');
-        $this->db->from('admin_access');
+        $this->db->select('*')->from('admin_access')->order_by('group');
         $query = $this->db->get();
 
         return $query->result_array();
@@ -109,7 +107,17 @@ class m_role extends m_base
 
     public function add($data)
     {
-        return $this->edb->insert_row('admin_role', $data);
+        $r = $this->edb->insert_row('admin_role', $data);
+
+        $id = $this->edb->insert_id();
+
+        //日志
+        $log['action'] = 'role/add';
+        $log['me'] = $_SESSION['me']['id'];
+        $log['id'] = $id;
+        $this->log->write(2, $log, $this->mongo);
+
+        return $r;
     }
 
     public function set($id, $data)
@@ -117,6 +125,43 @@ class m_role extends m_base
         if (isset($data['id']))
             unset($data['id']);
 
-        return $this->edb->set_row_id('admin_role', $data, $id);
+        $r = $this->edb->set_row_id('admin_role', $data, $id);
+
+        //日志
+        $log['action'] = 'role/set';
+        $log['me'] = $_SESSION['me']['id'];
+        $log['id'] = $id;
+        $log['data'] = $data;
+        $this->log->write(2, $log, $this->mongo);
+
+        return $r;
+    }
+
+    public function toggle($id)
+    {
+        $role = $this->get($id);
+
+        if ($role['status'] == '删除')
+            return 3;
+
+        if ($role['status'] == '正常')
+        {
+            $data['status'] = 2;
+        }
+        else
+        {
+            $data['status'] = 1;
+        }
+
+        $this->edb->set_row_id('admin_role', $data, $id);
+
+        //日志
+        $log['action'] = 'role/toggle';
+        $log['me'] = $_SESSION['me']['id'];
+        $log['id'] = $id;
+        $log['status'] = $data['status'];
+        $this->log->write(2, $log, $this->mongo);
+
+        return $data['status'];
     }
 }

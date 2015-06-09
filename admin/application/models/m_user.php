@@ -117,8 +117,7 @@ class m_user extends m_base
 
     public function gets()
     {
-        $this->db->select('*');
-        $this->db->from('admin');
+        $this->db->select('*')->from('admin')->where('`status` != 3');
         $this->db->join('admin_info', 'admin_info.id = admin.id');
 
         $query = $this->db->get();
@@ -132,23 +131,19 @@ class m_user extends m_base
      */
     public function toggle($id)
     {
-        $enum = $this->edb->enum('admin', 'status');
-
         $user = $this->get($id);
 
-        $status = $user['status'];
-        $index = -1;
+        if ($user['status'] == '删除')
+            return 3;
 
-        foreach ($enum as $key => $value)
+        if ($user['status'] == '正常')
         {
-            if ($value == $status)
-            {
-                $index = $key;
-                break;
-            }
+            $data['status'] = 2;
         }
-
-        $data['status'] = ($index + 1) % count($enum) + 1;
+        else
+        {
+            $data['status'] = 1;
+        }
 
         $this->edb->set_row_id('admin', $data, $id);
 
@@ -160,5 +155,55 @@ class m_user extends m_base
         $this->log->write(2, $log, $this->mongo);
 
         return $data['status'];
+    }
+
+    public function add($data)
+    {
+        $info['role'] = $data['role'];
+        unset($data['role']);
+
+        $data['psw'] = password_hash($data['psw'], PASSWORD_DEFAULT);
+
+        $r = $this->edb->insert_row('admin', $data);
+
+        if ($r > 0)
+        {
+            $id = $this->edb->insert_id();
+
+            $info['id'] = $id;
+            $info['name'] = '未填写';
+            $info['nick'] = '一个神秘的陌生人';
+            $this->edb->insert_row('admin_info', $info);
+
+            //日志
+            $log['action'] = 'user/add';
+            $log['me'] = $_SESSION['me']['id'];
+            $log['id'] = $id;
+            $log['data'] = array_merge($data, $info);
+            $this->log->write(2, $log, $this->mongo);
+
+            return TRUE;
+        }
+        else
+            return FALSE;
+    }
+
+    public function delete($id)
+    {
+        $user['status'] = 3;
+
+        $r = $this->edb->set_row_id('admin', $user, $id);
+
+        if ($r == 1)
+        {
+            //日志
+            $log['action'] = 'user/delete';
+            $log['me'] = $_SESSION['me']['id'];
+            $log['id'] = $id;
+            $log['status'] = $user['status'];
+            $this->log->write(2, $log, $this->mongo);
+        }
+
+        return $r == 1;
     }
 }

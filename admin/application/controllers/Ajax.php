@@ -32,10 +32,13 @@ class Ajax extends Controller_base
     public function admin_toggle()
     {
         //请求地址过滤
-        $urls[] = base_url() . 'user/admins.html';
+        $urls[] = base_url() . 'user/users.html';
 
         if (FALSE == $this->url($urls))
-            exit('1');
+        {
+            $this->send(array('result' => 1, 'msg' => 'ajax请求非法'));
+            return;
+        }
 
         //权限过滤
         if (TRUE === $this->is_permit('用户状态'))
@@ -47,6 +50,12 @@ class Ajax extends Controller_base
             $status = $this->muser->toggle($id);
 
             $this->send(array('result' => 0, 'data' => $status));
+            return;
+        }
+        else
+        {
+            $this->send(array('result' => 2, 'msg' => '没有操作权限'));
+            return;
         }
     }
 
@@ -56,7 +65,10 @@ class Ajax extends Controller_base
         $urls[] = base_url() . 'role/roles.html';
 
         if (FALSE == $this->url($urls))
-            exit('1');
+        {
+            $this->send(array('result' => 1, 'msg' => 'ajax请求非法'));
+            return;
+        }
 
         //权限过滤
         if (TRUE === $this->is_permit('角色修改'))
@@ -65,9 +77,15 @@ class Ajax extends Controller_base
 
             $this->load->model('m_user', 'muser');
 
-            $status = $this->muser->toggle($id);
+            $status = $this->mrole->toggle($id);
 
             $this->send(array('result' => 0, 'data' => $status));
+            return;
+        }
+        else
+        {
+            $this->send(array('result' => 2, 'msg' => '没有操作权限'));
+            return;
         }
     }
 }

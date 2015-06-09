@@ -147,7 +147,7 @@ if (typeof(get_js_path) == "undefined")
         this.img = img;
         this.id = img.attr('id');
 
-        this.fileid = this.id + "-";
+        this.fileid = this.id;
         this.imgid = this.id + "-img";
         this.tipid = this.id + "-tip";
         this.delid = this.id + "-del";
@@ -189,7 +189,7 @@ if (typeof(get_js_path) == "undefined")
 
             var file = "<input type='file' name='" + $this.fileid + "'  id='" + $this.fileid + "' style='display:none;'>";
             var img = "<img src='" + src + "' name='" + $this.imgid + "'  id='" + $this.imgid + "' style='" + style + ";cursor:pointer;width:" + w + "px;height:" + h + "px;' class='" + sclass + "'>";
-            var tip = "<div id='" + $this.tipid + "' style='display:none; position:absolute;top:" + y + "px;left:" + x + "px;width:" + w + "px;height:" + h + "px;background-color:#000;text-align:center;cursor:pointer;-moz-opacity: 0.6; opacity:0.6; filter: alpha(opacity=60);color:#fff;padding-top:20%;'>" + tip_text +
+            var tip = "<div id='" + $this.tipid + "' style='display:none; position:absolute;top:" + y + "px;left:" + x + "px;width:" + w + "px;height:" + h + "px;background-color:#000;text-align:center;cursor:pointer;-moz-opacity: 0.6; opacity:0.6; filter: alpha(opacity=60);color:#fff;padding-top:" + h * 0.35 + "px;'>" + tip_text +
                 "<div id='" + $this.delid + "' style='position:absolute;top:5px;right:5px;display:block;' class='easyform-close'></div>" +
                 "</div>";
 

@@ -65,5 +65,37 @@ $config = Array(
                 'max_length' => '%s 只能是64个汉字以下的长度'
             )
         )
-    )
+    ),
+
+    'user/add' => Array(
+        array(
+            'field' => 'uid',
+            'label' => '用户名',
+            'rules' => 'trim|required|max_length[20]|is_unique[admin.uid]',
+            'errors' => array(
+                'required' => '%s 不能为空',
+                'max_length' => '%s 只能是10个汉字以下的长度',
+                'is_unique' => '%s 不能重复，已经存在这个id的用户了'
+            )
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'trim|required|max_length[60]',
+            'errors' => array(
+                'required' => '%s 不能为空',
+                'max_length' => '%s 只能是60个字符以内'
+            )
+        ),
+        array(
+            'field' => 'mobile',
+            'label' => '手机',
+            'rules' => 'trim|required|exact_length[11]|numeric',
+            'errors' => array(
+                'required' => '%s 不能为空',
+                'exact_length' => '%s 只能是11位数字',
+                'numeric' => '%s 只能是数字'
+            )
+        )
+    ),
 );

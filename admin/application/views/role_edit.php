@@ -3,8 +3,7 @@
 
 <script>
 
-    $(document).ready(function ()
-    {
+    $(document).ready(function () {
         $('input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue'
@@ -18,7 +17,7 @@
 <div class="box box-primary">
     <div class="box-header"><i class="fa fa-users"></i>
 
-        <h3 class="box-title">职务</h3></div>
+        <h3 class="box-title">角色</h3></div>
     <div class="box-body">
 
         <?php echo validation_errors('<div class="callout callout-danger">', '</div>'); ?>
@@ -36,8 +35,6 @@
 
             ?>
 
-            <!-- <form class="form-horizontal"> -->
-
             <div class="form-group">
 
                 <div class="col-md-2">
@@ -54,6 +51,7 @@
 
                 <div class="col-md-6">
                     <input type="text" id="name" name="name" class="form-control" placeholder="角色名称"
+                           data-easyform="length:2 20"
                            value="<?php echo set_value('name', $role['name']); ?>">
                 </div>
 
@@ -61,13 +59,16 @@
 
             <div class="form-group">
                 <div class="col-md-8">
-                    <textarea id="explain" name="explain" class="form-control"
+                    <textarea id="explain" name="explain" class="form-control" data-easyform="length:4 128;"
+                              data-message="长度必须是4到128个字符之间"
                               placeholder="角色说明"><?php echo set_value('explain', $role['explain']); ?></textarea>
                 </div>
             </div>
+
+
             <h4 class="page-header">角色权限</h4>
             <?php $last_group = '';
-            $first            = TRUE;
+            $first = TRUE;
             foreach ($access as $v): ?>
 
                 <?php
@@ -83,11 +84,11 @@
                     echo '<section><h5>' . $v['group'] . '</h5>';
 
                     $last_group = $v['group'];
-                    $first      = FALSE;
+                    $first = FALSE;
                 }?>
 
 
-                <input class="check-access" id="access-<?php echo $v['id'] ?>" type="checkbox" name="access[]"
+                <input id="access-<?php echo $v['id'] ?>" type="checkbox" name="access[]"
                        value="<?php echo $v['id'] ?>"
                     <?php echo set_checkbox('access[]', $v['id'], in_array($v['id'], $role['access'])); ?>>
                 <label style="margin:0 15px 0 5px;" data-toggle="tooltip" title="<?php echo $v['explain'] ?>"
@@ -98,6 +99,8 @@
             <?php endforeach; ?>
 
             </section></div>
+
+
     </div>
 
     <br>

@@ -7,8 +7,7 @@
     <div class="box-body">
 
         <div style="margin-bottom:-30px;">
-            <a href="javascript:void(0);" class="btn btn-default" data-toggle="modal" data-target="#add-admin"><i
-                    class="fa fa-users"></i>
+            <a href="<?php echo base_url(); ?>user/add.html" class="btn btn-default"><i class="fa fa-users"></i>
                 添加管理员</a>
         </div>
 
@@ -53,9 +52,7 @@
 <script src="<?php echo get_path('js'); ?>common.js" type="text/javascript"></script>
 <script type="text/javascript">
 
-    var table;
-
-    table = $('#list').dataTable({
+    var table = $('#list').dataTable({
         "bLengthChange": false,
         "language": ch,
         "columnDefs": [
@@ -70,12 +67,16 @@
                 "targets": [6],
                 "searchable": false,
                 "orderable": false,
-                "render": function (data, type, row) {
+                "render": function (data, type, row)
+                {
+                    var html = '';
 
                     if (row[5] == "正常")
-                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用账户"><i class="fa fa-fw fa-ban"></i></button>';
+                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用用户"><i class="fa fa-fw fa-ban"></i></button>';
                     else
-                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用账户"><i class="fa fa-fw fa-check"></i></button>';
+                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用用户"><i class="fa fa-fw fa-check"></i></button>';
+
+                    html += '<button class="btn btn-danger btn-flat mini"  data-toggle=\"modal\" data-target=\"#delete-user\" data-id=\"' + row[0] + '\" data-name=\"' + row[2] + '\" data-toggle="tooltip" title="删除用户"><i class="fa fa-fw fa-times"></i></button>';
 
                     return html;
                 }
@@ -83,8 +84,8 @@
         ]
     }).api();
 
-    function admin_toggle(id) {
-
+    function admin_toggle(id)
+    {
         var bt = $("._click");
         $(bt).attr("disabled", true);
 
@@ -93,37 +94,56 @@
             url: "<?php echo base_url();?>ajax/admin_toggle.html",
             data: "id=" + id,
             dataType: "json",
-            success: function (data) {
+            success: function (data)
+            {
 
-                if (data.result == 0) {
+                if (data.result == 0)
+                {
                     var icon = $("._click i");
                     var bt = $("._click");
                     var row = table.row(bt.parent().parent()).index();
 
-                    if (data.data == 1) {
+                    if (data.data == 1)
+                    {
                         icon.removeClass("fa-check").addClass("fa-ban");
                         bt.removeClass("btn-success").addClass("btn-danger");
                         table.cell(row, 5).data("正常");
                     }
-                    else if (data.data == 2) {
+                    else if (data.data == 2)
+                    {
                         icon.removeClass("fa-ban").addClass("fa-check");
                         bt.removeClass("btn-danger").addClass("btn-success");
                         table.cell(row, 5).data("停用");
                     }
                 }
             },
-            error: function (msg) {
+            error: function (msg)
+            {
 
             },
-            complete: function () {
+            complete: function ()
+            {
                 $("._click").removeAttr("disabled");
                 $("._click").removeClass("_click");
             }
         })
     }
 
-</script>
+    $(document).ready(function ()
+    {
+        $('#delete-user').on('show.bs.modal', function (event)
+        {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var name = button.data('name');
+            var modal = $(this);
+            modal.find('#del-user-name').html(name);
+            modal.find('#del-user-id').html(id);
+            modal.find(".btn.btn-danger").attr("href", "<?php echo base_url();?>user/delete/" + id + ".html");
+        });
+    });
 
+</script>
 
 
 <!-- 修改密码 -->
@@ -131,35 +151,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">添加管理员</h4>
             </div>
             <div class="modal-body">
 
                 <div class="form-horizontal">
                     <form>
-                        <div  class="form-group">
+                        <div class="form-group">
                             <div class="col-md-8">
                                 <label for="uid">用户名 </label>
                                 <input type="text" id="uid" name="uid" class="form-control" value="">
                             </div>
                         </div>
 
-                        <div  class="form-group">
+                        <div class="form-group">
                             <div class="col-md-8">
                                 <label for="psw">密码 </label>
                                 <input type="password" id="psw" name="psw" class="form-control" value="">
                             </div>
                         </div>
 
-                        <div  class="form-group">
+                        <div class="form-group">
                             <div class="col-md-8">
                                 <label for="email">Emial </label>
                                 <input type="text" id="email" name="email" class="form-control" value="">
                             </div>
                         </div>
 
-                        <div  class="form-group">
+                        <div class="form-group">
                             <div class="col-md-8">
                                 <label for="mobile">手机 </label>
                                 <input type="text" id="mobile" name="mobile" class="form-control" value="">
@@ -173,6 +194,27 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" onclick="change();">添加管理员</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除确认 -->
+<div class="modal fade" id="delete-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">删除用户</h4>
+                <span style="display:none;" id="del-user-id"></span>
+            </div>
+            <div class="modal-body">
+                您确定你要删除用户<span id="del-user-name" class="text-red"></span>吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a class="btn btn-danger" href="">删除用户</a>
             </div>
         </div>
     </div>

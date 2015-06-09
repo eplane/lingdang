@@ -1,12 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /* 文件维护类
- * 上传的全部文件都会放到一个临时文件夹，该文件夹由
+ *
  *
  *
  */
-
-
 class File
 {
     private $ci;
@@ -14,8 +12,6 @@ class File
     public function __construct()
     {
         $this->ci =& get_instance();
-        //$this->ci->load->database();
-
         $this->ci->load->library('Guid');
     }
 
@@ -35,7 +31,7 @@ class File
         $config['upload_path'] = $config['temp_path'];     //将临时路径设置成目标路径
 
         if (NULL != $size)
-            $config['max_size'] = $size;                    //设置允许文件类型
+            $config['max_size'] = $size;                    //设置允许文件大小
 
         if (NULL != $types)
             $config['allowed_types'] = $types;           //设置允许文件类型
