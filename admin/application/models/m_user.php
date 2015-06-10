@@ -166,7 +166,7 @@ class m_user extends m_base
 
         $r = $this->edb->insert_row('admin', $data);
 
-        if ($r > 0)
+        if ($r == 1)
         {
             $id = $this->edb->insert_id();
 
@@ -205,5 +205,48 @@ class m_user extends m_base
         }
 
         return $r == 1;
+    }
+
+    public function set($id, $data)
+    {
+        $info = [];
+
+        if (isset($data['id']))
+            unset($data['id']);
+
+        if (isset($data['name']))
+        {
+            $info['name'] = $data['name'];
+            unset($data['name']);
+        }
+
+        if (isset($data['nick']))
+        {
+            $info['nick'] = $data['nick'];
+            unset($data['nick']);
+        }
+
+        if (isset($data['avatar']))
+        {
+            $avatar = $_SESSION['me']['avatar'];
+            $this->file->delete($avatar);   //File类会在 controller / User 中被加载
+            $info['avatar'] = $data['avatar'];
+            unset($data['avatar']);
+        }
+
+        if (count($data) > 0)
+            $this->edb->set_row_id('admin', $data, $id);
+
+        if (count($info) > 0)
+            $this->edb->set_row_id('admin_info', $info, $id);
+
+        //日志
+        $log['action'] = 'user/set';
+        $log['me'] = $_SESSION['me']['id'];
+        $log['id'] = $id;
+        $log['data'] = array_merge($data, $info);
+        $this->log->write(2, $log, $this->mongo);
+
+        return TRUE;
     }
 }

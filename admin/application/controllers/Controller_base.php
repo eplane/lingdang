@@ -51,7 +51,7 @@ class Controller_base extends CI_Controller
         {
             $access = explode(',', $access);
 
-            $user_access = $this->mrole->get_access($_SESSION['me']['roles']);
+            $user_access = $this->mrole->get_access($_SESSION['me']['roles'], TRUE);
 
             foreach ($user_access as $row)
             {

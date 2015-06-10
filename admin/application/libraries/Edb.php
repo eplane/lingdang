@@ -254,11 +254,13 @@ class Edb
      */
     public function set_row_id($table, $data, $id)
     {
-        $this->update($table, $data, '`id` = ' . $id);
+        $r = $this->update($table, $data, '`id` = ' . $id);
 
         $key = $table . $id;
 
-        return $this->ci->cache->delete($key);
+        $this->ci->cache->delete($key);
+
+        return $r;
     }
 
     /** 查询并缓存一个值，需要注意同步问题。

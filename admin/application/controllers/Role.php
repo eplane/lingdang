@@ -14,7 +14,7 @@ class Role extends Controller_base
         $this->is_permit('角色浏览', TRUE);
 
         //路径导航条数据
-        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '角色列表' => ''];
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '角色列表' => ''];
 
         $data['data'] = $this->mrole->gets(TRUE);
 
@@ -40,10 +40,10 @@ class Role extends Controller_base
         }
         else    //表单验证成功
         {
-            $role['name']    = $this->input->post('name');
-            $role['status']  = $this->input->post('status');
+            $role['name'] = $this->input->post('name');
+            $role['status'] = $this->input->post('status');
             $role['explain'] = $this->input->post('explain');
-            $role['access']  = implode(',', $this->input->post('access'));
+            $role['access'] = implode(',', $this->input->post('access'));
 
             if ($cmd == 'add')
             {
@@ -63,7 +63,7 @@ class Role extends Controller_base
         $this->is_permit('角色添加', TRUE);
 
         //路径导航条数据
-        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '添加角色' => ''];
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '添加角色' => ''];
 
         $data['role'] = Array('id' => '', 'name' => '', 'explain' => '', 'status' => '正常', 'access' => Array());
 
@@ -75,13 +75,34 @@ class Role extends Controller_base
         $this->is_permit('角色修改', TRUE);
 
         //路径导航条数据
-        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '修改角色' => ''];
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '修改角色' => ''];
 
         $data['role'] = $this->mrole->get($id, FALSE, TRUE);
 
         $data['role']['access'] = explode(',', $data['role']['access']);
 
+        $data['user'] = $this->mrole->user($id);
+
         $this->_role($data, $id, 'edit');
     }
 
+    public function delete($id)
+    {
+        $this->is_permit('角色删除', TRUE);
+
+        $this->mrole->delete($id);
+
+        redirect(base_url() . 'role/roles.html');
+    }
+
+    public function delete_user($role, $user)
+    {
+        $this->is_permit('角色修改,用户修改', TRUE);
+
+        $this->load->model('m_user', 'muser');
+
+        $user = $this->muser->get($user);
+
+        var_dump($user);
+    }
 }

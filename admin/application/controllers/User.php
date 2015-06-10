@@ -17,7 +17,7 @@ class User extends Controller_base
     public function me()
     {
         //路径导航条数据
-        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '个人资料' => ''];
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '个人资料' => ''];
 
         $data['user'] = $this->session->me;
 
@@ -35,7 +35,7 @@ class User extends Controller_base
         {
             //保存角色信息
             $submit['name'] = $this->input->post('name');
-            $submit['nickname'] = $this->input->post('nick');
+            $submit['nick'] = $this->input->post('nick');
             $submit['mobile'] = $this->input->post('mobile');
             $submit['email'] = $this->input->post('email');
 
@@ -49,12 +49,29 @@ class User extends Controller_base
                 $submit['avatar'] = $this->file->save('avatar');     //保存文件
             }
 
-            $this->muser->save($data['user']['id'], $submit);
+            $this->muser->set($data['user']['id'], $submit);
 
-            $data['user'] = $this->session->user;
+            $_SESSION['me'] = $this->muser->get($data['user']['id'], TRUE);
+
+            $data['user'] = $this->session->me;
 
             $this->view('user_me', $data);
         }
+    }
+
+    public function psw()
+    {
+        $opsw = $this->input->post('opsw');
+        $npsw1 = $this->input->post('npsw1');
+
+        if (password_verify($opsw, $_SESSION['me']['psw']))
+        {
+            $data['psw'] = password_hash($npsw1, PASSWORD_DEFAULT);
+
+            $this->muser->set($_SESSION['me']['id'], $data);
+        }
+
+        redirect(base_url() . 'user/me.html');
     }
 
     public function users()
@@ -62,7 +79,7 @@ class User extends Controller_base
         $this->is_permit('用户浏览', TRUE);
 
         //路径导航条数据
-        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '管理员列表' => ''];
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '管理员列表' => ''];
 
         $data['data'] = $this->muser->gets();
 
@@ -77,7 +94,7 @@ class User extends Controller_base
         $this->load->helper('form');
 
         //路径导航条数据
-        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/admins.html', '添加用户' => ''];
+        $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '添加用户' => ''];
 
         $data['role'] = $this->mrole->gets();
 

@@ -2,3 +2,7 @@ http://plugins.krajee.com/file-input/demo
 文件上传插件
 
 Varnish 页面片段缓存
+
+
+开关插件
+http://www.bootstraptoggle.com

@@ -206,6 +206,7 @@ class File
         }
     }
 
+    //30位数字字母混合，字母小写
     private function create_file_name()
     {
         return date('Ymd', time()) . Guid::short();

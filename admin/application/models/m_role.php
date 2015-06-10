@@ -31,7 +31,7 @@ class m_role extends m_base
 
     public function gets($refresh = FALSE)
     {
-        $this->db->select('*')->from('admin_role');
+        $this->db->select('*')->from('admin_role')->where('`status` != 3');
         $query = $this->db->get();
 
         return $query->result_array();
@@ -105,6 +105,26 @@ class m_role extends m_base
         return $query->result_array();
     }
 
+    public function user($role)
+    {
+        $this->load->model('m_user', 'muser');
+        $users = $this->muser->gets();
+
+        $data = [];
+
+        foreach ($users as $row)
+        {
+            $roles = explode(',', $row['role']);
+
+            if (in_array($role, $roles))
+            {
+                $data[] = $row;
+            }
+        }
+
+        return $data;
+    }
+
     public function add($data)
     {
         $r = $this->edb->insert_row('admin_role', $data);
@@ -163,5 +183,24 @@ class m_role extends m_base
         $this->log->write(2, $log, $this->mongo);
 
         return $data['status'];
+    }
+
+    public function delete($id)
+    {
+        $role['status'] = 3;
+
+        $r = $this->edb->set_row_id('admin_role', $role, $id);
+
+        if ($r == 1)
+        {
+            //日志
+            $log['action'] = 'role/delete';
+            $log['me'] = $_SESSION['me']['id'];
+            $log['id'] = $id;
+            $log['status'] = $role['status'];
+            $this->log->write(2, $log, $this->mongo);
+        }
+
+        return $r == 1;
     }
 }

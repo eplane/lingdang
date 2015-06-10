@@ -61,7 +61,8 @@
             {
                 "name": "name",
                 "targets": [1],
-                "render": function (data, type, row) {
+                "render": function (data, type, row)
+                {
                     var str = "<a href=\"<?php echo base_url();?>role/edit/" + row[0] + ".html\" title=\"编辑角色\">" + data + "</a>";
                     return str;
                 }
@@ -72,57 +73,37 @@
                 "targets": [3],
                 "searchable": false,
                 "orderable": false,
-                "render": function (data, type, row) {
+                "render": function (data, type, row)
+                {
                     if (row[2] == "正常")
-                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');role_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用角色"><i class="fa fa-fw fa-ban"></i></button>';
+                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');role_toggle(' + row[0] + ');" title="停用角色"><i class="fa fa-fw fa-ban"></i></button>';
                     else
-                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');role_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用角色"><i class="fa fa-fw fa-check"></i></button>';
+                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');role_toggle(' + row[0] + ');" title="启用角色"><i class="fa fa-fw fa-check"></i></button>';
+
+                    html += '<button class="btn btn-danger btn-flat mini"  data-toggle="modal" data-target="#delete-role" data-id="' + row[0] + '" data-name="' + row[2] + '" title="删除角色"><i class="fa fa-fw fa-times"></i></button>';
 
                     return html;
                 }
             }
         ]
     }).api();
-</script>
 
-<!-- 删除确认 -->
-<div class="modal fade" id="delete-role" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">删除职务</h4>
-                <span style="display:none;" id="del-role-id"></span>
-            </div>
-            <div class="modal-body">
-                您确定你要删除职务<span class="del-role-name text-red"></span>吗？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-danger" onclick="del();">删除职务</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-
-    $(document).ready(function ($) {
-
-        $('#delete-role').on('show.bs.modal', function (event) {
-
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var name = button.data('name')
-            var modal = $(this)
-            modal.find('.del-role-name').html(name)
-            modal.find('#del-role-id').html(id)
-
+    $(document).ready(function ()
+    {
+        $('#delete-role').on('show.bs.modal', function (event)
+        {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var name = button.data('name');
+            var modal = $(this);
+            modal.find('#del-role-name').html(name);
+            modal.find('#del-role-id').html(id);
+            modal.find(".btn.btn-danger").attr("href", "<?php echo base_url();?>role/delete/" + id + ".html");
         });
     });
 
-    function role_toggle(id) {
+    function role_toggle(id)
+    {
 
         var bt = $("._click");
         $(bt).attr("disabled", true);
@@ -132,34 +113,64 @@
             url: "<?php echo base_url();?>ajax/role_toggle.html",
             data: "id=" + id,
             dataType: "json",
-            success: function (data) {
+            success: function (data)
+            {
 
-                if (data.result == 0) {
+                if (data.result == 0)
+                {
                     var icon = $("._click i");
                     var bt = $("._click");
                     var row = table.row(bt.parent().parent()).index();
 
-                    if (data.data == 1) {
+                    if (data.data == 1)
+                    {
                         icon.removeClass("fa-check").addClass("fa-ban");
                         bt.removeClass("btn-success").addClass("btn-danger");
                         table.cell(row, 2).data("正常");
                     }
-                    else if (data.data == 2) {
+                    else if (data.data == 2)
+                    {
                         icon.removeClass("fa-ban").addClass("fa-check");
                         bt.removeClass("btn-danger").addClass("btn-success");
                         table.cell(row, 2).data("停用");
                     }
                 }
             },
-            error: function (msg) {
+            error: function (msg)
+            {
 
             },
-            complete: function () {
+            complete: function ()
+            {
                 $("._click").removeAttr("disabled");
                 $("._click").removeClass("_click");
             }
         })
     }
+</script>
+
+<!-- 删除确认 -->
+<div class="modal fade" id="delete-role" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">删除角色</h4>
+                <span style="display:none;" id="del-role-id"></span>
+            </div>
+            <div class="modal-body">
+                您确定你要删除角色<span class="del-role-name text-red"></span>吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a class="btn btn-danger" href="">删除角色</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
 
 
 </script>

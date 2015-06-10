@@ -72,11 +72,11 @@
                     var html = '';
 
                     if (row[5] == "正常")
-                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="停用用户"><i class="fa fa-fw fa-ban"></i></button>';
+                        html = '<button class="btn btn-danger btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" title="停用用户"><i class="fa fa-fw fa-ban"></i></button>';
                     else
-                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" data-toggle="tooltip" title="启用用户"><i class="fa fa-fw fa-check"></i></button>';
+                        html = '<button class="btn btn-success btn-flat mini" onclick="$(this).addClass(\'_click\');admin_toggle(' + row[0] + ');" title="启用用户"><i class="fa fa-fw fa-check"></i></button>';
 
-                    html += '<button class="btn btn-danger btn-flat mini"  data-toggle=\"modal\" data-target=\"#delete-user\" data-id=\"' + row[0] + '\" data-name=\"' + row[2] + '\" data-toggle="tooltip" title="删除用户"><i class="fa fa-fw fa-times"></i></button>';
+                    html += '<button class="btn btn-danger btn-flat mini" title="删除用户" data-toggle="modal" data-target="#delete-user" data-id="' + row[0] + '" data-name="' + row[2] + '" ><i class="fa fa-fw fa-times"></i></button>';
 
                     return html;
                 }
