@@ -37,6 +37,9 @@ class Test extends CI_Controller
 
         $a = $r->result_array();
 
+
+        $this->mongo->command();
+
         //var_dump(json_decode($a[0]['msg'], TRUE));
         var_dump($a);
 

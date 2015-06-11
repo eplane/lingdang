@@ -226,6 +226,12 @@ class M_user extends m_base
             unset($data['nick']);
         }
 
+        if (isset($data['role']))
+        {
+            $info['role'] = $data['role'];
+            unset($data['role']);
+        }
+
         if (isset($data['avatar']))
         {
             $avatar = $_SESSION['me']['avatar'];

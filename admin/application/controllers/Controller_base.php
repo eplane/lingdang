@@ -9,6 +9,8 @@ class Controller_base extends CI_Controller
         $this->load->model('m_role', 'mrole');
         $this->load->library('CI_Mongo', NULL, 'mongo');
 
+
+
         if (FALSE == $this->is_login())
         {
             redirect(base_url() . 'login.html');

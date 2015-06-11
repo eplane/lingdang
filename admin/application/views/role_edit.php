@@ -8,9 +8,10 @@
     $(document).ready(function ()
     {
         <?php if(isset($user)):?>
-        var table = $('#list').dataTable({
+        $('#list').dataTable({
             "bLengthChange": false,
             "language": ch,
+            "pageLength": 10,
             "columnDefs": [
                 {
                     "name": "id",
@@ -27,13 +28,33 @@
                     {
                         var html = '';
 
-                        html += '<button class="btn btn-danger btn-flat mini"  data-toggle=\"modal\" data-target=\"#delete-user\" data-id=\"' + row[0] + '\" data-name=\"' + row[2] + '\" title="删除用户"><i class="fa fa-fw fa-times"></i></button>';
+                        html += '<button class="btn btn-danger btn-flat mini"  data-toggle="modal" data-target="#delete-user" data-id="' + row[0] + '" data-name="' + row[2] + '" title="删除用户"><i class="fa fa-fw fa-times"></i></button>';
 
                         return html;
                     }
                 }
             ]
-        }).api();
+        });
+
+        $('#add-list').dataTable({
+            "bLengthChange": false,
+            "language": ch,
+            "pageLength": 5,
+            "order": [[ 2, 'asc' ]],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "orderable": false,
+                    "searchable": false
+                },
+                {
+                    "name": "id",
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": false
+                }
+            ]
+        });
         <?php endif;?>
 
         $('input[type="checkbox"]').iCheck({
@@ -164,15 +185,16 @@
     <!--角色成员-->
     <div class="box box-primary">
 
-        <div class="box-header"><i class="fa fa-users"></i>
+        <div class="box-header"><i class="fa fa-user"></i>
 
             <h3 class="box-title">角色成员</h3></div>
 
         <div class="box-body">
 
             <div style="margin-bottom:-30px;">
-                <a href="<?php echo base_url(); ?>user/add.html" class="btn btn-default"><i class="fa fa-users"></i>
-                    添加用户</a>
+                <button data-toggle="modal" data-target="#add-user" class="btn btn-default"><i class="fa fa-user"></i>
+                    添加用户
+                </button>
             </div>
 
             <table id="list" class="table table-bordered table-hover table-striped" style="width:100%;">
@@ -240,4 +262,55 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- 添加用户 -->
+<div class="modal fade" id="add-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <form>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">为角色添加新用户</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <table id="add-list" class="table table-bordered table-hover table-striped" style="width:100%;">
+                        <thead>
+                        <tr>
+                            <th width="30"><input type="checkbox" id="all"></th>
+                            <th>id</th>
+                            <th>昵称</th>
+                            <th>姓名</th>
+                            <th width="40">状态</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <?php foreach ($user2 as $row): ?>
+                            <tr>
+                                <td><input type="checkbox" id="" name="user[]"></td>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['nick']; ?></td>
+                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo $row['status']; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a class="btn btn-success" href="">添加用户</a>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

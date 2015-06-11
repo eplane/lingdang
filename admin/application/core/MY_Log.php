@@ -82,7 +82,7 @@ class  MY_Log extends CI_Log
             }
             else if ($this->option['drive'] == 'mongo')
             {
-                return $mongo->get_where('log', array('date' => $date))->result_array();
+                return $mongo->get_where($this->option['name'], array('date' => $date))->result_array();
             }
         }
 
@@ -91,9 +91,9 @@ class  MY_Log extends CI_Log
 
     private function build($data, $level)
     {
-        $log['stamp'] = time();
-        $log['time'] = date('H:i:s', $log['stamp']);
-        $log['date'] = date('Y-m-d', $log['stamp']);
+        $stamp = time();
+        $log['time'] = date('H:i:s', $stamp);
+        $log['date'] = date('Y-m-d', $stamp);
         $log['data'] = $data;
 
         switch ($level)

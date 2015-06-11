@@ -74,6 +74,8 @@ class Role extends Controller_base
     {
         $this->is_permit('角色修改', TRUE);
 
+        $this->load->model('m_user', 'muser');
+
         //路径导航条数据
         $data['nav'] = ['主页' => 'main.html', '用户管理' => 'user/users.html', '修改角色' => ''];
 
@@ -82,6 +84,21 @@ class Role extends Controller_base
         $data['role']['access'] = explode(',', $data['role']['access']);
 
         $data['user'] = $this->mrole->user($id);
+
+        $data['user2'] = $this->muser->gets();
+
+        foreach($data['user'] as $row)
+        {
+            foreach($data['user2'] as $k=>$v)
+            {
+                if( $v['id'] ==  $row['id'] )
+                {
+                    unset($data['user2'][$k]);
+                }
+            }
+        }
+
+        //var_dump($data['user2']);
 
         $this->_role($data, $id, 'edit');
     }
@@ -103,6 +120,21 @@ class Role extends Controller_base
 
         $user = $this->muser->get($user);
 
-        var_dump($user);
+        $roles = explode(',', $user['roles']);
+
+        $i = array_search($role, $roles);
+
+        if ($i <= FALSE)
+        {
+            unset($roles[$i]);
+        }
+
+        $roles = implode(',', $roles);
+
+        $data['role'] = $roles;
+
+        $this->muser->set($user['id'], $data);
+
+        redirect(base_url() . 'role/edit/' . $role . '.html');
     }
 }
