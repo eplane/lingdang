@@ -79,7 +79,7 @@ class M_user extends m_base
      */
     public function get($id, $refresh = FALSE)
     {
-        if (!!$id)
+        if (is_int($id))
         {
             $login = $this->edb->get_row_id($refresh, 'admin', $id);
 

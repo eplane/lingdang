@@ -74,6 +74,15 @@
             modal.find('#del-user-id').html(id);
             modal.find(".btn.btn-danger").attr("href", "<?php echo base_url();?>role/delete_user/<?php echo $role['id']?>/" + id + ".html");
         });
+
+        $("#all").on("ifChanged",function(){
+
+            if( this.checked )
+                $(".select-user").iCheck('check');
+            else
+                $(".select-user").iCheck('uncheck');
+
+        });
     });
 
 </script>
@@ -266,7 +275,8 @@
 
 <!-- 添加用户 -->
 <div class="modal fade" id="add-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form>
+    <form id="add-form" method="post" action="<?php echo base_url();?>role/add_user.html">
+        <input type="hidden" name="id" value="<?php echo $id;?>">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -275,8 +285,6 @@
                     <h4 class="modal-title" id="myModalLabel">为角色添加新用户</h4>
                 </div>
                 <div class="modal-body">
-
-
                     <table id="add-list" class="table table-bordered table-hover table-striped" style="width:100%;">
                         <thead>
                         <tr>
@@ -292,7 +300,7 @@
 
                         <?php foreach ($user2 as $row): ?>
                             <tr>
-                                <td><input type="checkbox" id="" name="user[]"></td>
+                                <td><input type="checkbox" class="select-user" name="user[]" value="<?php echo $row['id']; ?>"></td>
                                 <td><?php echo $row['id']; ?></td>
                                 <td><?php echo $row['nick']; ?></td>
                                 <td><?php echo $row['name']; ?></td>
@@ -308,7 +316,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <a class="btn btn-success" href="">添加用户</a>
+                    <input type="submit" value="添加用户" class="btn btn-success">
                 </div>
             </div>
         </div>

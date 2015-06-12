@@ -40,10 +40,10 @@ class Role extends Controller_base
         }
         else    //表单验证成功
         {
-            $role['name'] = $this->input->post('name');
-            $role['status'] = $this->input->post('status');
+            $role['name']    = $this->input->post('name');
+            $role['status']  = $this->input->post('status');
             $role['explain'] = $this->input->post('explain');
-            $role['access'] = implode(',', $this->input->post('access'));
+            $role['access']  = implode(',', $this->input->post('access'));
 
             if ($cmd == 'add')
             {
@@ -85,20 +85,20 @@ class Role extends Controller_base
 
         $data['user'] = $this->mrole->user($id);
 
+        $data['id'] = $id;
+
         $data['user2'] = $this->muser->gets();
 
-        foreach($data['user'] as $row)
+        foreach ($data['user'] as $row)
         {
-            foreach($data['user2'] as $k=>$v)
+            foreach ($data['user2'] as $k => $v)
             {
-                if( $v['id'] ==  $row['id'] )
+                if ($v['id'] == $row['id'])
                 {
                     unset($data['user2'][$k]);
                 }
             }
         }
-
-        //var_dump($data['user2']);
 
         $this->_role($data, $id, 'edit');
     }
@@ -124,7 +124,7 @@ class Role extends Controller_base
 
         $i = array_search($role, $roles);
 
-        if ($i <= FALSE)
+        if ($i != FALSE)
         {
             unset($roles[$i]);
         }
@@ -134,6 +134,38 @@ class Role extends Controller_base
         $data['role'] = $roles;
 
         $this->muser->set($user['id'], $data);
+
+        redirect(base_url() . 'role/edit/' . $role . '.html');
+    }
+
+    /**
+     * TODO 存在循环update，应该优化
+     */
+    public function add_user()
+    {
+        $this->is_permit('角色修改,用户修改', TRUE);
+
+        $this->load->model('m_user', 'muser');
+
+        $users = $this->input->post('user');
+
+        $role = $this->input->post('id');
+
+        foreach ($users as $id)
+        {
+            //获取用户信息
+            $user = $this->muser->get($id);
+
+            //获取用户角色信息
+            $roles = explode(',', $user['roles']);
+
+            //如果用户没有该角色，则添加角色
+            if (FALSE == in_array($role, $roles))
+            {
+                $data['role'] = $user['roles'] . ',' . $role;
+                $this->muser->set($id, $data);
+            }
+        }
 
         redirect(base_url() . 'role/edit/' . $role . '.html');
     }
