@@ -90,7 +90,7 @@
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas" style="/*display:none;*/">
+    <aside class="left-side sidebar-offcanvas" style="display:none;">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -134,11 +134,11 @@
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-edit"></i>
-                        <span>协议管理</span>
+                        <span>文档管理</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="javascript:void(0);"><i class="fa fa-angle-double-right"></i>协议列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>doc.html"><i class="fa fa-angle-double-right"></i>文档列表</a></li>
                     </ul>
                 </li>
 

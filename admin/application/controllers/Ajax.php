@@ -88,4 +88,24 @@ class Ajax extends Controller_base
             return;
         }
     }
+
+    public function upload_1()
+    {
+        //请求地址过滤
+        $urls[] = base_url() . 'doc/add.html';
+
+        if (FALSE == $this->url($urls))
+        {
+            $this->send(array('result' => 1, 'msg' => 'ajax请求非法'));
+            return;
+        }
+
+        //权限过滤
+        //if (TRUE === $this->is_permit('角色修改'))
+        {
+            $this->load->library('File');
+
+            $this->file->upload('img');
+        }
+    }
 }

@@ -131,4 +131,27 @@ $config = Array(
             )
         )
     ),
+
+    'doc/add' => Array(
+        array(
+            'field' => 'name',
+            'label' => '文档名称',
+            'rules' => 'trim|required|max_length[40]|min_length[6]',
+            'errors' => array(
+                'required' => '%s 不能为空',
+                'max_length' => '%s 必须是20个汉字以下的长度',
+                'min_length' => '%s 必须是3个汉字以上的长度'
+            )
+        ),
+        array(
+            'field' => 'content',
+            'label' => '文档内容',
+            'rules' => 'trim|required|max_length[10000000]',
+            'errors' => array(
+                'required' => '%s 不能为空',
+                'max_length' => '%s 必须在10M长度以下'
+            )
+        )
+    ),
+
 );

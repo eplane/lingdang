@@ -3,6 +3,9 @@ http://plugins.krajee.com/file-input/demo
 
 Varnish 页面片段缓存
 
+iCheck主页
+https://github.com/fronteed/iCheck
+
 
 开关插件
 http://www.bootstraptoggle.com

@@ -18,7 +18,7 @@ class M_user extends m_base
     {
         //获得用户数据
         $id = $this->get_id($uid, TRUE);
-        $user = $this->get($id, TRUE);
+        $user = $this->get((int)$id, TRUE);
 
         if (password_verify($password, $user['psw']))
         {
@@ -82,7 +82,6 @@ class M_user extends m_base
         if (is_int($id))
         {
             $login = $this->edb->get_row_id($refresh, 'admin', $id);
-
             $info = $this->edb->get_row_id($refresh, 'admin_info', $id);
 
             $roles['roles'] = $info ['role'];

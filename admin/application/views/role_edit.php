@@ -251,6 +251,7 @@
 <script src="<?php echo get_path('common-js'); ?>easyform/easyform.js" type="text/javascript"></script>
 
 
+<?php if (isset($user)): ?>
 <!-- 删除确认 -->
 <div class="modal fade" id="delete-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -322,3 +323,4 @@
         </div>
     </form>
 </div>
+<?php endif; ?>

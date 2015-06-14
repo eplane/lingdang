@@ -1,10 +1,10 @@
 
-<link rel="stylesheet" type="text/css" href="<?php echo js_path();?>plugins/simditor-2.1.2/styles/simditor.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_path('js');?>plugins/simditor-2.1.2/styles/simditor.css" />
 
-<script type="text/javascript" src="<?php echo js_path();?>plugins/simditor-2.1.2/scripts/module.js"></script>
-<script type="text/javascript" src="<?php echo js_path();?>plugins/simditor-2.1.2/scripts/uploader.js"></script>
-<script type="text/javascript" src="<?php echo js_path();?>plugins/simditor-2.1.2/scripts/hotkeys.min.js"></script>
-<script type="text/javascript" src="<?php echo js_path();?>plugins/simditor-2.1.2/scripts/simditor.js"></script>
+<script type="text/javascript" src="<?php echo get_path('js');?>plugins/simditor-2.1.2/scripts/module.js"></script>
+<script type="text/javascript" src="<?php echo get_path('js');?>plugins/simditor-2.1.2/scripts/uploader.js"></script>
+<script type="text/javascript" src="<?php echo get_path('js');?>plugins/simditor-2.1.2/scripts/hotkeys.min.js"></script>
+<script type="text/javascript" src="<?php echo get_path('js');?>plugins/simditor-2.1.2/scripts/simditor.js"></script>
 
 
 
@@ -15,7 +15,7 @@
 
 	    var editor = new Simditor({
 			  textarea: $('#editor'),
-			  defaultImage:'<?php echo img_path(); ?>/1.png',
+			  defaultImage:'<?php echo get_path('img'); ?>/1.png',
 			   upload : {  
 		            url : 'ImgUpload.action', //文件上传的接口地址  
 		            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交  

@@ -5,15 +5,13 @@
 
         <h3 class="box-title">角色列表</h3></div>
     <div class="box-body">
-
         <div style="width:70%">
 
             <div style="margin-bottom:-30px;">
-                <a href="<?php echo base_url(); ?>role/add.html" class="btn btn-default"><i
-                        class="fa fa-users"></i> 添加角色</a>
+                <a href="<?php echo base_url(); ?>role/add.html" class="btn btn-default"><i class="fa fa-users"></i> 添加角色</a>
             </div>
 
-            <table id="rolelist" class="table table-bordered table-hover table-striped">
+            <table id="rolelist" class="table table-bordered table-hover table-striped" style="width:100%;">
                 <thead>
                 <tr>
                     <th>id</th>
@@ -169,8 +167,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-
-
-</script>
