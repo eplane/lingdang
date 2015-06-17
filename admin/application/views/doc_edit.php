@@ -67,22 +67,33 @@
 <script type="text/javascript" src="<?php echo get_path('common-js'); ?>simditor/scripts/uploader.js"></script>
 <script type="text/javascript" src="<?php echo get_path('common-js'); ?>simditor/scripts/hotkeys.js"></script>
 <script type="text/javascript" src="<?php echo get_path('common-js'); ?>simditor/scripts/simditor.js"></script>
+<script type="text/javascript" src="<?php echo get_path('common-js'); ?>common.js"></script>
 <script>
 
     $(document).ready(function ()
     {
         $("#form").easyform();
 
+        var id = uuid(8, 16);
+
         var editor = new Simditor({
             textarea: $('#content'),
             defaultImage: '<?php echo get_path('img'); ?>ajax-loader.gif',
             upload: {
                 url: '<?php echo base_url();?>ajax/upload_1.html',
-                params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-                fileKey: 'img', //服务器端获取文件数据的参数名
+                params: {id: id}, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                fileKey: id, //服务器端获取文件数据的参数名
                 connectionCount: 3,
                 leaveConfirm: '正在上传文件'
             }
+        });
+
+        editor.on('valuechanged', function ()
+        {
+            id = uuid(8, 16);
+
+            this.opts.upload.fileKey = id;
+            this.opts.upload.params = {id: id};
         });
     });
 

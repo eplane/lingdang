@@ -5,6 +5,7 @@
  *
  *
  */
+
 class File
 {
     private $ci;
@@ -43,6 +44,7 @@ class File
         if (!$this->ci->upload->do_upload($file))
         {
             $result['error'] = 'TRUE';
+            $result['success'] = 'FALSE';
             $result['method'] = 'save';
             $result['message'] = $this->ci->upload->display_errors();
             return $result;
@@ -59,7 +61,9 @@ class File
             $this->ci->session->$file = $cache;
 
             $result['error'] = 'FALSE';
+            $result['success'] = 'TRUE';
             $result['data'] = $data['upload_data'];
+            $result['message'] = '';
         }
 
         return $result;
@@ -102,6 +106,7 @@ class File
         if (!$this->ci->image_lib->crop())
         {
             $result['error'] = 'TRUE';
+            $result['success'] = 'FALSE';
             $result['method'] = 'resize';
             $result['message'] = $this->ci->image_lib->display_errors();
         }
@@ -117,6 +122,7 @@ class File
             $filedata['raw_name'] = $filename;
 
             $result['error'] = 'FALSE';
+            $result['success'] = 'TRUE';
             $result['data'] = $filedata;
         }
 
@@ -226,6 +232,15 @@ class File
         $c = $this->ci->config->item('upload');     //获取文件上传根目录
 
         $path = $c['web_root'] . substr($filename, 0, 8) . '/';
+
+        return $path . $filename;
+    }
+
+    public function get_temp_file($filename)
+    {
+        $c = $this->ci->config->item('upload');     //获取文件上传根目录
+
+        $path = $c['web_temp'];
 
         return $path . $filename;
     }

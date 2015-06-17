@@ -39,7 +39,13 @@ class Doc extends Controller_base
             $doc['type']  = $this->input->post('type');
             $doc['content'] = $this->input->post('content');
 
-            var_dump($doc);
+           // var_dump($doc);
+
+            $this->load->library('text');
+
+            $r = $this->text->get_img($doc['content']);
+
+            var_dump($r);
 
             $this->view('doc_edit', $data);
 

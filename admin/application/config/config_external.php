@@ -30,8 +30,9 @@ $config['expiration'] = 300;                //验证码超时
 $config['data_timeout'] = 3600;           //数据缓存过期 86400一天    604800一周
 
 //Upload 设置
-$config['upload']['upload_path'] = APPPATH . '../../resource/upload/';     //上传文件的根目录
-$config['upload']['temp_path'] = APPPATH . '../../resource/temp/';     //上传文件的临时目录
+$config['upload']['upload_path'] = APPPATH . '../../resource/upload/';          //上传文件的根目录
+$config['upload']['temp_path'] = APPPATH . '../../resource/temp/';              //上传文件的临时目录
+$config['upload']['web_temp'] = 'http://localhost/dog/resource/temp/';       //文件的外部访问根目录
 $config['upload']['web_root'] = 'http://localhost/dog/resource/upload/';       //文件的外部访问根目录
 $config['upload']['allowed_types'] = 'gif|jpg|png';
 $config['upload']['max_size'] = '1000';     //单位 K

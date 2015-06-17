@@ -89,6 +89,9 @@ class Ajax extends Controller_base
         }
     }
 
+    /**
+     * 单文件上传
+     */
     public function upload_1()
     {
         //请求地址过滤
@@ -100,12 +103,19 @@ class Ajax extends Controller_base
             return;
         }
 
-        //权限过滤
-        //if (TRUE === $this->is_permit('角色修改'))
+        // 权限过滤
+        // 判断用户是否已经登录
+        if (isset($_SESSION['me']) && !!$_SESSION['me'])
         {
+            //var_dump($_POST);
+
+            $id = $this->input->post('id');
+
             $this->load->library('File');
 
-            $this->file->upload('img');
+            $r = $this->file->upload($id);
+
+            echo '{"success":"' . $r['success'] . '" ,"file_path":"' . get_temp_file($r['data']['file_name']) . '", "msg":"' . $r['message'] . '"}';
         }
     }
 }
