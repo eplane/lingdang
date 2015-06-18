@@ -146,10 +146,10 @@ $config = Array(
         array(
             'field' => 'content',
             'label' => '文档内容',
-            'rules' => 'trim|required|max_length[10000000]',
+            'rules' => 'trim|required|max_length[1000000]',
             'errors' => array(
                 'required' => '%s 不能为空',
-                'max_length' => '%s 必须在10M长度以下'
+                'max_length' => '%s 必须在1M长度以下'
             )
         )
     ),

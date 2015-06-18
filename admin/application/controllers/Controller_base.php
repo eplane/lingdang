@@ -10,7 +10,6 @@ class Controller_base extends CI_Controller
         $this->load->library('CI_Mongo', NULL, 'mongo');
 
 
-
         if (FALSE == $this->is_login())
         {
             redirect(base_url() . 'login.html');
@@ -69,7 +68,7 @@ class Controller_base extends CI_Controller
             }
         }
 
-        if( $jump )
+        if ($jump)
         {
             //redirect(base_url() . 'main/error.html');
         }
@@ -80,5 +79,16 @@ class Controller_base extends CI_Controller
     public function error()
     {
         echo '错误';
+    }
+
+    //敏感词验证
+    //TODO 敏感词数据源
+    public function _illegal_words($str)
+    {
+        $this->load->library('Content');
+
+        $words = ['测试'];
+
+        return $this->content->illegal_words($str, $words);
     }
 }

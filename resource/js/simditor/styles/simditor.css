@@ -509,7 +509,7 @@
 }
 .simditor .simditor-popover {
   display: none;
-  padding: 5px 8px 0;
+  padding: 5px 8px;
   background: #ffffff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   border-radius: 2px;
@@ -531,6 +531,7 @@
   width: 200px;
   box-sizing: border-box;
   font-size: 12px;
+    margin: 1px 0;
 }
 .simditor .simditor-popover .settings-field input[type=text].image-size {
   width: 87px;

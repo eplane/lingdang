@@ -13,14 +13,23 @@
 
         <div class="form-horizontal">
 
-            <?php echo form_open(base_url() . 'doc/add.html', array('id' => 'form')); ?>
+            <?php
+            if (isset($doc['_id']))
+            {
+                echo form_open(base_url() . 'doc/edit/' . get_mongo_id($doc) . '.html', array('id' => 'form'));
+            }
+            else
+            {
+                echo form_open(base_url() . 'doc/add.html', array('id' => 'form'));
+            }
+            ?>
 
             <div class="form-group">
 
                 <div class="col-md-3">
                     <label for="type">文档分类</label>
                     <select id="type" name="type" class="form-control">
-                        <option>用户协议</option>
+                        <option value="用户协议" <?php echo set_select('type', '用户协议', $doc['type']); ?>>用户协议</option>
                     </select>
                 </div>
 
@@ -28,7 +37,7 @@
                     <label for="content">文档名称</label><input type="text" id="name" name="name" class="form-control"
                                                             placeholder="文档名称" data-easyform="length:6 40;"
                                                             data-easytip="position:bottom;"
-                                                            value="<?php echo set_value('name'); ?>">
+                                                            value="<?php echo set_value('name', $doc['name']); ?>">
                 </div>
             </div>
 
@@ -36,7 +45,7 @@
                 <div class="col-md-12">
                     <label for="content">文档内容</label>
                     <textarea id="content" placeholder="这里输入内容"
-                              name="content"><?php echo set_value('content'); ?></textarea>
+                              name="content"><?php echo set_value('content', $doc['content']); ?></textarea>
                 </div>
             </div>
 
@@ -67,33 +76,23 @@
 <script type="text/javascript" src="<?php echo get_path('common-js'); ?>simditor/scripts/uploader.js"></script>
 <script type="text/javascript" src="<?php echo get_path('common-js'); ?>simditor/scripts/hotkeys.js"></script>
 <script type="text/javascript" src="<?php echo get_path('common-js'); ?>simditor/scripts/simditor.js"></script>
-<script type="text/javascript" src="<?php echo get_path('common-js'); ?>common.js"></script>
 <script>
 
     $(document).ready(function ()
     {
         $("#form").easyform();
 
-        var id = uuid(8, 16);
 
         var editor = new Simditor({
             textarea: $('#content'),
             defaultImage: '<?php echo get_path('img'); ?>ajax-loader.gif',
             upload: {
                 url: '<?php echo base_url();?>ajax/upload_1.html',
-                params: {id: id}, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-                fileKey: id, //服务器端获取文件数据的参数名
+                params: {m: 1, id: "img"}, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                fileKey: "img", //服务器端获取文件数据的参数名
                 connectionCount: 3,
                 leaveConfirm: '正在上传文件'
             }
-        });
-
-        editor.on('valuechanged', function ()
-        {
-            id = uuid(8, 16);
-
-            this.opts.upload.fileKey = id;
-            this.opts.upload.params = {id: id};
         });
     });
 

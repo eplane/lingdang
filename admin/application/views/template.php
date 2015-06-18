@@ -26,7 +26,8 @@
     <![endif]-->
 
     <!-- jQuery 2.1.3 -->
-    <script src="<?php echo get_path('js'); ?>jquery-2.1.3.min.js"></script>
+    <!--<script src="<?php /*echo get_path('js'); */?>jquery-2.1.3.min.js"></script>-->
+    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
     <!-- jQuery UI 1.10.3 -->
 <!--    <script src="<?php /*echo get_path('js'); */?>jquery-ui-1.10.3.min.js" type="text/javascript"></script>-->
     <!-- Bootstrap -->
@@ -90,7 +91,7 @@
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas" style="display:none;">
+    <aside class="left-side sidebar-offcanvas" style="/*display:none;*/">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- sidebar menu: : style can be found in sidebar.less -->

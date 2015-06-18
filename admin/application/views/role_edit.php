@@ -105,7 +105,6 @@
             {
                 echo form_open(base_url() . 'role/add.html', array('id' => 'form'));
             }
-
             ?>
 
             <div class="form-group">

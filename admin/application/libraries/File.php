@@ -22,9 +22,9 @@ class File
         //删除连续上传的重复文件
         $last_file = $this->ci->session->$file;
 
-        if (NULL != $last_file && file_exists($last_file['fullpath'] . $last_file['file']))
+        if (NULL != $last_file && file_exists($last_file['path'] . $last_file['file']))
         {
-            unlink($last_file['fullpath'] . $last_file['file']);
+            unlink($last_file['path'] . $last_file['file']);
         }
 
         //保存文件到 temp
@@ -55,7 +55,7 @@ class File
 
             //保存文件信息，供后面处理数据使用
             $cache['file'] = $data['upload_data']['file_name'];
-            $cache['fullpath'] = $data['upload_data']['file_path'];
+            $cache['path'] = $data['upload_data']['file_path'];
             //var_dump($cache);
 
             $this->ci->session->$file = $cache;
@@ -212,6 +212,28 @@ class File
         }
     }
 
+    public function delete_temp($file)
+    {
+        if (!!$file)
+        {
+            $path = $this->get_temp_path();
+
+            if (FALSE != is_dir($path))
+            {
+                if (file_exists($path . $file))
+                {
+                    return unlink($path . $file);
+                }
+            }
+
+            return FALSE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
     //30位数字字母混合，字母小写
     private function create_file_name()
     {
@@ -223,6 +245,15 @@ class File
         $c = $this->ci->config->item('upload');     //获取文件上传根目录
 
         $path = $c['upload_path'] . substr($file, 0, 8) . '/';
+
+        return $path;
+    }
+
+    private function get_temp_path()
+    {
+        $c = $this->ci->config->item('upload');     //获取文件上传根目录
+
+        $path = $c['temp_path'];
 
         return $path;
     }
@@ -243,5 +274,27 @@ class File
         $path = $c['web_temp'];
 
         return $path . $filename;
+    }
+
+    public function is_temp_file($file)
+    {
+        if (!!$file)
+        {
+            $path = $this->get_temp_path();
+
+            if (FALSE != is_dir($path))
+            {
+                if (file_exists($path . $file))
+                {
+                    return TRUE;
+                }
+            }
+
+            return FALSE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 }

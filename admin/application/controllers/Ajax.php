@@ -13,9 +13,12 @@ class Ajax extends Controller_base
     {
         $referer = $this->input->server('HTTP_REFERER');
 
-        if (in_array($referer, $list))
+        foreach($list as $item)
         {
-            return TRUE;
+            if(strpos($referer, $item))
+            {
+                return TRUE;
+            }
         }
 
         return FALSE;
@@ -32,7 +35,7 @@ class Ajax extends Controller_base
     public function admin_toggle()
     {
         //请求地址过滤
-        $urls[] = base_url() . 'user/users.html';
+        $urls[] = 'user/users.html';
 
         if (FALSE == $this->url($urls))
         {
@@ -62,7 +65,7 @@ class Ajax extends Controller_base
     public function role_toggle()
     {
         //请求地址过滤
-        $urls[] = base_url() . 'role/roles.html';
+        $urls[] = 'role/roles.html';
 
         if (FALSE == $this->url($urls))
         {
@@ -95,11 +98,12 @@ class Ajax extends Controller_base
     public function upload_1()
     {
         //请求地址过滤
-        $urls[] = base_url() . 'doc/add.html';
+        $urls[] = 'doc/add.html';
+        $urls[] = 'doc/edit';
 
         if (FALSE == $this->url($urls))
         {
-            $this->send(array('result' => 1, 'msg' => 'ajax请求非法'));
+            $this->send(array('success' => 'FALSE', 'result' => 1, 'msg' => 'ajax请求非法'));
             return;
         }
 
@@ -107,13 +111,27 @@ class Ajax extends Controller_base
         // 判断用户是否已经登录
         if (isset($_SESSION['me']) && !!$_SESSION['me'])
         {
-            //var_dump($_POST);
-
             $id = $this->input->post('id');
+            $multi = $this->input->post('m');
 
             $this->load->library('File');
 
+            //上传文件
             $r = $this->file->upload($id);
+
+            //是否要上传多个文件
+            if ($multi)
+            {
+                //保存临时文件的信息
+                $temp = $_SESSION[$id];
+
+                //清除临时文件缓存，以便相同名字能上传多个文件
+                unset($_SESSION[$id]);
+
+                $name = get_file_name($temp['file']);
+
+                $_SESSION[$name] = $temp;
+            }
 
             echo '{"success":"' . $r['success'] . '" ,"file_path":"' . get_temp_file($r['data']['file_name']) . '", "msg":"' . $r['message'] . '"}';
         }

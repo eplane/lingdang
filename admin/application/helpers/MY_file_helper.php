@@ -60,12 +60,12 @@ if (!function_exists('get_path'))
      */
     function get_path($path)
     {
-        $CI         =& get_instance();
+        $CI =& get_instance();
         $other_path = $CI->config->item('other_path');
 
         if (isset($other_path[$path]))
         {
-            return base_url().$other_path[$path];
+            return base_url() . $other_path[$path];
         }
         else
         {
@@ -73,5 +73,29 @@ if (!function_exists('get_path'))
             trigger_error($msg, E_USER_ERROR);
             return FALSE;
         }
+    }
+}
+
+if (!function_exists('get_file_name'))
+{
+    /** 获得一个文件的名字，不包括路径和扩展名
+     * @param $path
+     * @return  bool|string
+     */
+    function get_file_name($file)
+    {
+        return pathinfo($file, PATHINFO_FILENAME);
+    }
+}
+
+if (!function_exists('get_file_fullname'))
+{
+    /** 获得一个文件的名字，不包括路径，但包括扩展名
+     * @param $path
+     * @return  bool|string
+     */
+    function get_file_fullname($file)
+    {
+        return pathinfo($file, PATHINFO_BASENAME);
     }
 }
