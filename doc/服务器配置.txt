@@ -1,0 +1,39 @@
+php 5.4
+
+强制卸载 
+1. rpm -qa|grep php 查看依赖关系
+2. rpm -e xxxx 逐个卸载
+3. php -v 确认
+
+tar zxvf xxxxxxxxxxx
+
+
+rpm -Uvh http://repo.webtatic.com/yum/el6/latest.rpm
+yum install php54w 
+
+
+httpd.conf
+LoadModule php5_module        modules/libphp5.so
+AddType application/x-httpd-php .php
+AddType application/x-httpd-php-source .phps
+
+
+安装libmemcached
+
+make clean
+make distclean
+
+libmemcached
+./configure --prefix=/usr/lib64/libmemcached
+
+memcached
+./configure --with-libmemcached-dir=/usr/lib64/libmemcached --disable-memcached-sasl
+
+
+prefork 优化连接数限制
+
+查找rmp包安装位置
+rpm -ql libmemcached | cat -n
+
+
+memcached -d -u root -p 11210
