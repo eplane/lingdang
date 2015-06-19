@@ -26,8 +26,8 @@
     <![endif]-->
 
     <!-- jQuery 2.1.3 -->
-    <!--<script src="<?php /*echo get_path('js'); */?>jquery-2.1.3.min.js"></script>-->
-    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="<?php echo get_path('js'); ?>jquery-2.1.3.min.js"></script>
+    <!--<script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>-->
     <!-- jQuery UI 1.10.3 -->
 <!--    <script src="<?php /*echo get_path('js'); */?>jquery-ui-1.10.3.min.js" type="text/javascript"></script>-->
     <!-- Bootstrap -->
@@ -49,6 +49,9 @@
         <!-- Sidebar toggle button-->
         <a href="javascript:;" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
         </a>
 
         <div class="navbar-right">

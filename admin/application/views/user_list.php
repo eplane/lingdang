@@ -49,7 +49,6 @@
 <script src="<?php echo get_path('js'); ?>plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
 <script src="<?php echo get_path('js'); ?>plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <script src="<?php echo get_path('js'); ?>plugins/datatables/cn.js" type="text/javascript"></script>
-<script src="<?php echo get_path('js'); ?>common.js" type="text/javascript"></script>
 <script type="text/javascript">
 
     var table = $('#list').dataTable({
