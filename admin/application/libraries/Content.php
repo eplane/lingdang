@@ -49,26 +49,14 @@ class Content
             //如果是网站内的临时文件
             if ($this->ci->file->is_temp_file($fullname))
             {
-                $md5 = md5_file($img['file']);
+                $name = get_file_name($img['file']);
 
-                //如果是一张新图片
-                if (FALSE == isset($temp[$md5]))
-                {
-                    $name = get_file_name($img['file']);
+                $file = $this->ci->file->save($name);
 
-                    $file = $this->ci->file->save($name);
-
-                    $temp[$md5]['file'] = get_file($file);
-                }
-                else    //如果是一张重复的图片
-                {
-                    $name = get_file_fullname($img['file']);
-
-                    $this->ci->file->delete_temp($name);
-                }
+                $temp[$name]['file'] = get_file($file);
 
                 //替换文件
-                $html = str_replace($img['file'], $temp[$md5]['file'], $html);
+                $html = str_replace($img['file'], $temp[$name]['file'], $html);
             }
         }
 

@@ -9,3 +9,6 @@ https://github.com/fronteed/iCheck
 
 ¿ª¹Ø²å¼þ
 http://www.bootstraptoggle.com
+
+froala±à¼­Æ÷
+https://www.froala.com/wysiwyg-editor/docs/events

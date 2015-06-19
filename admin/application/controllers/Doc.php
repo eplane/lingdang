@@ -39,7 +39,7 @@ class Doc extends Controller_base
         //执行server端验证
         if ($this->form_validation->run() == FALSE)
         {
-            $this->view('doc_edit', $data);
+            $this->view('doc_edit2', $data);
         }
         else    //表单验证成功
         {
@@ -64,7 +64,7 @@ class Doc extends Controller_base
                 $this->mdoc->set($id, $doc);
             }
 
-            $this->view('doc_edit', $data);
+            $this->view('doc_edit2', $data);
 
             redirect(base_url() . 'doc.html');
         }

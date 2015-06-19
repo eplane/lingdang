@@ -41,9 +41,6 @@ class Controller_base extends CI_Controller
 
     protected function is_permit($access = NULL, $jump = FALSE)
     {
-        //获得请求地址
-        //$uri = uri_string();
-
         $count = 0;
         $count_access = count($access);
 
@@ -70,15 +67,35 @@ class Controller_base extends CI_Controller
 
         if ($jump)
         {
-            //redirect(base_url() . 'main/error.html');
+            redirect(base_url() . 'main/error.html');
         }
 
         return FALSE;
     }
 
+    protected function url($list)
+    {
+        $referer = $this->input->server('HTTP_REFERER');
+
+        foreach ($list as $item)
+        {
+            if (strpos($referer, $item))
+            {
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
+    protected function send($array)
+    {
+        echo json_encode($array);
+    }
+
     public function error()
     {
-        echo '错误';
+        echo '没有权限';
     }
 
     //敏感词验证

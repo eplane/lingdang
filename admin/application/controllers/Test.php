@@ -64,4 +64,22 @@ class Test extends CI_Controller
         /* $str = str_replace("\r\n", '<br>', $str);*/
         var_dump($str);
     }
+
+    public function file()
+    {
+        $this->load->library('File');
+
+        $n = $this->file->create_file_name();
+
+        var_dump($n);
+
+        $d= $this->file->get_path($n);
+
+        var_dump($d);
+
+        $w = $this->file->get_web_path($n);
+
+        var_dump($w);
+
+    }
 }

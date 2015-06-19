@@ -51,11 +51,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-3">
-                </div>
-            </div>
-
 
             <div class="form-group">
                 <div class="col-md-12">
@@ -98,6 +93,7 @@
         $('#content')
             .editable({
                 inlineMode: false,
+                height: '500',
                 allowedImageTypes: ['jpeg', 'jpg', 'png', 'gif'],
                 language: 'zh_cn',
                 imageUploadURL: '<?php echo base_url();?>ajax/upload_1.html',

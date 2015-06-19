@@ -235,16 +235,33 @@ class File
     }
 
     //30位数字字母混合，字母小写
-    private function create_file_name()
+    public function create_file_name()
     {
-        return date('Ymd', time()) . Guid::short();
+        //支持2038年以后的时间
+        $date = new DateTime();
+        $date = $date->format('Ymd');
+
+        return $date . Guid::short();
     }
 
-    private function get_path($file)
+    public function get_path($file)
     {
         $c = $this->ci->config->item('upload');     //获取文件上传根目录
 
-        $path = $c['upload_path'] . substr($file, 0, 8) . '/';
+        $file = get_file_name($file);
+
+        $path = $c['upload_path'] . substr($file, 0, 8) . '/' . substr($file, strlen($file) - 1, 1) . '/';
+
+        return $path;
+    }
+
+    public function get_web_path($file)
+    {
+        $c = $this->ci->config->item('upload');     //获取文件上传根目录
+
+        $file = get_file_name($file);
+
+        $path = $c['web_root'] . substr($file, 0, 8) . '/' . substr($file, strlen($file) - 1, 1) . '/';
 
         return $path;
     }
@@ -260,9 +277,9 @@ class File
 
     public function get_file($filename)
     {
-        $c = $this->ci->config->item('upload');     //获取文件上传根目录
+        //$c = $this->ci->config->item('upload');     //获取文件上传根目录
 
-        $path = $c['web_root'] . substr($filename, 0, 8) . '/';
+        $path = $this->get_web_path($filename);
 
         return $path . $filename;
     }

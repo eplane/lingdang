@@ -9,26 +9,6 @@ class Ajax extends Controller_base
         parent::__construct();
     }
 
-    private function url($list)
-    {
-        $referer = $this->input->server('HTTP_REFERER');
-
-        foreach($list as $item)
-        {
-            if(strpos($referer, $item))
-            {
-                return TRUE;
-            }
-        }
-
-        return FALSE;
-    }
-
-    private function send($array)
-    {
-        echo json_encode($array);
-    }
-
     /** 切换管理员账号权限
      * @param int $id
      */
@@ -133,7 +113,32 @@ class Ajax extends Controller_base
                 $_SESSION[$name] = $temp;
             }
 
-            echo '{"success":"' . $r['success'] . '" ,"file_path":"' . get_temp_file($r['data']['file_name']) . '", "msg":"' . $r['message'] . '"}';
+            //echo '{"success":"' . $r['success'] . '" ,"link":"' . get_temp_file($r['data']['file_name']) . '", "msg":"' . $r['message'] . '"}';
+
+            echo json_encode(array('link' => get_temp_file($r['data']['file_name'])));
+        }
+    }
+
+    public function delete_1()
+    {
+        $urls[] = 'doc/add.html';
+        $urls[] = 'doc/edit';
+
+        if (FALSE == $this->url($urls))
+        {
+            $this->send(array('success' => 'FALSE', 'result' => 1, 'msg' => 'ajax请求非法'));
+            return;
+        }
+
+        $this->load->library('File');
+
+        $file = $this->input->post('file');
+
+        $file = get_file_fullname($file);
+
+        if (FALSE == $this->file->delete($file))
+        {
+            $this->file->delete_temp($file);
         }
     }
 }
