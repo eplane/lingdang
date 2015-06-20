@@ -52,8 +52,8 @@ class Doc extends Controller_base
 
             $this->load->library('Content');
 
-            //将文章中的图片从临时文件中保存成正式文件
-            $doc['content'] = $this->content->save_img($doc['content']);
+            //对文章的内容进行处理
+            $doc['content'] = $this->content->save($doc['content']);
 
             if ($cmd == 'add')
             {

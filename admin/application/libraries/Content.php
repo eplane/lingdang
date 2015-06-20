@@ -16,7 +16,18 @@ class Content
         $this->ci =& get_instance();
     }
 
-    public function get_img($html)
+    /** 对提交的文章内容进行处理
+     * 1. 转存文章中的图片
+     * 2. 对html标签进行过滤，例如<script>
+     * @param $html
+     * @return mixed
+     */
+    public function save($html)
+    {
+        return $this->save_img($html);
+    }
+
+    private function get_img($html)
     {
         preg_match_all('/<img.*?src="(.*?)".*?>/is', $html, $results);
 
@@ -26,14 +37,14 @@ class Content
 
         for ($i = 0; $i < $len; $i++)
         {
-            $temp[$i]['img'] = $results[0][$i];
+            $temp[$i]['img']  = $results[0][$i];
             $temp[$i]['file'] = $results[1][$i];
         }
 
         return $temp;
     }
 
-    public function save_img($html)
+    private function save_img($html)
     {
         //获得文章中的临时图片信息
         $imgs = $this->get_img($html);
