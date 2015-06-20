@@ -39,7 +39,7 @@ class Controller_base extends CI_Controller
         $this->load->view('template', $data);
     }
 
-    protected function is_permit($access = NULL, $jump = FALSE)
+    protected function is_permit($access, $jump = FALSE)
     {
         $count        = 0;
         $count_access = count($access);
