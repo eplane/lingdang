@@ -28,7 +28,7 @@ class File
         }
 
         //保存文件到 temp
-        $config = $this->ci->config->item('upload');        //获取默认配置
+        $config                = $this->ci->config->item('upload');        //获取默认配置
         $config['upload_path'] = $config['temp_path'];     //将临时路径设置成目标路径
 
         if (NULL != $size)
@@ -43,9 +43,9 @@ class File
 
         if (!$this->ci->upload->do_upload($file))
         {
-            $result['error'] = 'TRUE';
+            $result['error']   = 'TRUE';
             $result['success'] = 'FALSE';
-            $result['method'] = 'save';
+            $result['method']  = 'save';
             $result['message'] = $this->ci->upload->display_errors();
             return $result;
         }
@@ -60,9 +60,9 @@ class File
 
             $this->ci->session->$file = $cache;
 
-            $result['error'] = 'FALSE';
+            $result['error']   = 'FALSE';
             $result['success'] = 'TRUE';
-            $result['data'] = $data['upload_data'];
+            $result['data']    = $data['upload_data'];
             $result['message'] = '';
         }
 
@@ -89,15 +89,15 @@ class File
 
         $filename = Guid::long();
 
-        $config['image_library'] = 'gd2';
-        $config['quality'] = 90;
-        $config['source_image'] = $filedata['full_path'];
-        $config['new_image'] = $filedata['file_path'] . $filename . $filedata['file_ext'];
+        $config['image_library']  = 'gd2';
+        $config['quality']        = 90;
+        $config['source_image']   = $filedata['full_path'];
+        $config['new_image']      = $filedata['file_path'] . $filename . $filedata['file_ext'];
         $config['maintain_ratio'] = FALSE;          //保证设置的长宽有效
-        $config['x_axis'] = $x * $sx;
-        $config['y_axis'] = $y * $sy;
-        $config['width'] = $w * $sx;
-        $config['height'] = $h * $sy;
+        $config['x_axis']         = $x * $sx;
+        $config['y_axis']         = $y * $sy;
+        $config['width']          = $w * $sx;
+        $config['height']         = $h * $sy;
 
         $this->ci->image_lib->initialize($config);
 
@@ -105,25 +105,25 @@ class File
 
         if (!$this->ci->image_lib->crop())
         {
-            $result['error'] = 'TRUE';
+            $result['error']   = 'TRUE';
             $result['success'] = 'FALSE';
-            $result['method'] = 'resize';
+            $result['method']  = 'resize';
             $result['message'] = $this->ci->image_lib->display_errors();
         }
         else
         {
             //保存文件信息，供后面处理数据使用
-            $cache['file'] = $filename . $filedata['file_ext'];
+            $cache['file']     = $filename . $filedata['file_ext'];
             $cache['fullpath'] = $filedata['file_path'];
             //var_dump($cache);
             $this->ci->session->$filesession = $cache;
 
             $filedata['file_name'] = $filename . $filedata['file_ext'];
-            $filedata['raw_name'] = $filename;
+            $filedata['raw_name']  = $filename;
 
-            $result['error'] = 'FALSE';
+            $result['error']   = 'FALSE';
             $result['success'] = 'TRUE';
-            $result['data'] = $filedata;
+            $result['data']    = $filedata;
         }
 
         //删除上传的源文件
@@ -165,7 +165,7 @@ class File
 
                 if (FALSE == is_dir($path))
                 {
-                    mkdir($path);
+                    mkdir($path, 0777, TRUE);
                 }
 
                 $c = $this->ci->config->item('upload');     //获取文件上传根目录

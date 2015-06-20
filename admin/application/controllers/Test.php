@@ -5,10 +5,13 @@ class Test extends CI_Controller
 {
     public function qr()
     {
-        $this->load->add_package_path(APPPATH . 'third_party/PHPQRCode/');
+        /*$this->load->add_package_path(APPPATH . 'third_party/PHPQRCode/');
         $this->load->library('PHPQRCode', NULL, 'qr');
 
-        echo $this->qr->encode('a你好a!！');
+        echo $this->qr->encode('a你好a!！');*/
+
+        echo $this->uri->ruri_string();
+
     }
 
     public function en()

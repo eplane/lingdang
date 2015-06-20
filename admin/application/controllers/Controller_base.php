@@ -41,7 +41,7 @@ class Controller_base extends CI_Controller
 
     protected function is_permit($access = NULL, $jump = FALSE)
     {
-        $count = 0;
+        $count        = 0;
         $count_access = count($access);
 
         //获得权限验证列表
@@ -73,7 +73,7 @@ class Controller_base extends CI_Controller
         return FALSE;
     }
 
-    protected function url($list)
+    protected function url($list, $exit)
     {
         $referer = $this->input->server('HTTP_REFERER');
 
@@ -83,6 +83,11 @@ class Controller_base extends CI_Controller
             {
                 return TRUE;
             }
+        }
+
+        if ($exit)
+        {
+            exit(json_encode(array('success' => 'FALSE', 'msg' => 'ajax请求非法')));
         }
 
         return FALSE;

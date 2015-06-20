@@ -3,7 +3,6 @@
 <link href="<?php echo get_path('common-js'); ?>froala/css/froala_editor_l.css" rel="stylesheet" type="text/css">
 <link href="<?php echo get_path('common-js'); ?>froala/css/froala_style_l.css" rel="stylesheet" type="text/css">
 
-
 <div class="box box-primary">
     <div class="box-header"><i class="fa fa-user"></i>
 
@@ -51,7 +50,6 @@
                 </div>
             </div>
 
-
             <div class="form-group">
                 <div class="col-md-12">
                     <input type="submit" id="sss" value="保存" class="btn btn-default">
@@ -59,14 +57,9 @@
             </div>
 
             </form>
-
         </div>
-
     </div>
-
-
 </div>
-
 
 <script src="<?php echo get_path('common-js'); ?>easyform/easyform.js" type="text/javascript"></script>
 <script src="<?php echo get_path('common-js'); ?>froala/js/froala_editor.min.js"></script>
@@ -85,7 +78,6 @@
 <script src="<?php echo get_path('common-js'); ?>froala/js/langs/zh_cn.js"></script>
 
 <script>
-
     $(document).ready(function ()
     {
         $("#form").easyform();
@@ -98,18 +90,13 @@
                 language: 'zh_cn',
                 imageUploadURL: '<?php echo base_url();?>ajax/upload_1.html',
                 imageUploadParams: {m: 1, id: "file"},
-                imageDeleteURL: '<?php echo base_url();?>ajax/delete_1.html',
+                imageDeleteURL: '<?php echo base_url();?>ajax/delete_1.html'
             })
-
             .on('editable.afterRemoveImage', function (e, editor, $img)
             {
-                // Set the image source to the image delete params.
                 editor.options.imageDeleteParams = {file: $img.attr('src')};
 
-                // Make the delete request.
                 editor.deleteImage($img);
             });
-
     });
-
 </script>

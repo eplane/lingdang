@@ -26,6 +26,8 @@ class Doc extends Controller_base
         $this->view('doc_list', $data);
     }
 
+    //TODO 修改文档时，图片的删除和上传是实时的，即使最后没有按保存，图片也会被修改
+    // 这会造成文档内容和图片的不同步。
     private function _doc($data, $id = 0, $cmd = 'add')
     {
         $this->load->library('form_validation');
@@ -51,9 +53,7 @@ class Doc extends Controller_base
             $this->load->library('Content');
 
             //将文章中的图片从临时文件中保存成正式文件
-            //这个过程会将重复的图片值保留唯一的一份，其余指向相同的文件。
             $doc['content'] = $this->content->save_img($doc['content']);
-            $_POST['content'] = $doc['content'];
 
             if ($cmd == 'add')
             {
@@ -64,7 +64,7 @@ class Doc extends Controller_base
                 $this->mdoc->set($id, $doc);
             }
 
-            $this->view('doc_edit2', $data);
+            //$this->view('doc_edit2', $data);
 
             redirect(base_url() . 'doc.html');
         }

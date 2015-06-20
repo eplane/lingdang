@@ -17,11 +17,7 @@ class Ajax extends Controller_base
         //请求地址过滤
         $urls[] = 'user/users.html';
 
-        if (FALSE == $this->url($urls))
-        {
-            $this->send(array('result' => 1, 'msg' => 'ajax请求非法'));
-            return;
-        }
+        $this->url($urls, TRUE);
 
         //权限过滤
         if (TRUE === $this->is_permit('用户状态'))
@@ -47,11 +43,7 @@ class Ajax extends Controller_base
         //请求地址过滤
         $urls[] = 'role/roles.html';
 
-        if (FALSE == $this->url($urls))
-        {
-            $this->send(array('result' => 1, 'msg' => 'ajax请求非法'));
-            return;
-        }
+        $this->url($urls, TRUE);
 
         //权限过滤
         if (TRUE === $this->is_permit('角色修改'))
@@ -82,12 +74,7 @@ class Ajax extends Controller_base
         //请求地址过滤
         $urls[] = 'doc/add.html';
         $urls[] = 'doc/edit';
-
-        if (FALSE == $this->url($urls))
-        {
-            $this->send(array('success' => 'FALSE', 'result' => 1, 'msg' => 'ajax请求非法'));
-            return;
-        }
+        $this->url($urls, TRUE);
 
         $id = $this->input->post('id');
         $multi = $this->input->post('m');
@@ -116,7 +103,6 @@ class Ajax extends Controller_base
         echo json_encode(array('link' => get_temp_file($r['data']['file_name'])));
     }
 
-
     public function delete_1()
     {
         // 在base的构造里已经判断了是否登录
@@ -124,11 +110,7 @@ class Ajax extends Controller_base
         $urls[] = 'doc/add.html';
         $urls[] = 'doc/edit';
 
-        if (FALSE == $this->url($urls))
-        {
-            $this->send(array('success' => 'FALSE', 'result' => 1, 'msg' => 'ajax请求非法'));
-            return;
-        }
+        $this->url($urls, TRUE);
 
         $this->load->library('File');
 
