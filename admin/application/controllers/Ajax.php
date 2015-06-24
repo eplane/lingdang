@@ -123,4 +123,9 @@ class Ajax extends Controller_base
             $this->file->delete_temp($file);
         }
     }
+
+    public function upload_stack()
+    {
+        
+    }
 }

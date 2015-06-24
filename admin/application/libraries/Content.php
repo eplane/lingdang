@@ -18,13 +18,15 @@ class Content
 
     /** 对提交的文章内容进行处理
      * 1. 转存文章中的图片
-     * 2. 对html标签进行过滤，例如<script>
+     * 2. 对html标签进行过滤，包括script，script，link
      * @param $html
      * @return mixed
      */
     public function save($html)
     {
-        return $this->save_img($html);
+        $content = $this->save_img($html);
+
+        return $content;
     }
 
     private function get_img($html)
@@ -37,7 +39,7 @@ class Content
 
         for ($i = 0; $i < $len; $i++)
         {
-            $temp[$i]['img']  = $results[0][$i];
+            $temp[$i]['img'] = $results[0][$i];
             $temp[$i]['file'] = $results[1][$i];
         }
 

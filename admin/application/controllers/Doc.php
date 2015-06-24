@@ -45,10 +45,11 @@ class Doc extends Controller_base
         }
         else    //表单验证成功
         {
-            $doc['name'] = $this->input->post('name');
-            $doc['type'] = $this->input->post('type');
-            $doc['content'] = $this->input->post('content');
-            // var_dump($doc);
+            $doc['name'] = $this->input->post('name', TRUE);
+            $doc['type'] = $this->input->post('type', TRUE);
+            $doc['content'] = $this->input->post('content', TRUE);
+
+            //var_dump($doc);
 
             $this->load->library('Content');
 
