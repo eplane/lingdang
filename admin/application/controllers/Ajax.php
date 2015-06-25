@@ -82,7 +82,8 @@ class Ajax extends Controller_base
 
         $r = $this->file->upload($id, $temp, $replace);
 
-        echo json_encode(array('link' => get_file($r['data']['file_name'])));
+        //echo json_encode(array('link' => get_file($r['data']['file_name'])));
+        echo json_encode(array('link' => 'https://www.baidu.com/img/baidu_jgylogo3.gif'));
     }
 
     public function delete()
@@ -103,5 +104,22 @@ class Ajax extends Controller_base
         {
             $this->file->delete_temp($file);
         }
+    }
+
+    /*
+     * 富文本编辑
+     * */
+    public function upload_stack()
+    {
+        //请求地址过滤
+        $urls[] = 'doc/add.html';
+        $urls[] = 'doc/edit';
+        $this->url($urls, TRUE);
+
+        $id = $this->input->post('id');
+        $replace = $this->input->post('r');
+        $temp = $this->input->post('t');
+
+        $this->load->library('File');
     }
 }

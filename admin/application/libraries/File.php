@@ -16,6 +16,33 @@ class File
         $this->ci->load->library('Guid');
     }
 
+    /** 文件操作堆栈——入栈
+     * @param $cmd
+     * @param $file
+     * @param $param
+     */
+    public function push($cmd, $file, $param)
+    {
+        if (FALSE == isset($_SESSION['file']))
+        {
+            $_SESSION['file'] = array();
+        }
+
+        $_SESSION['file'][] = array('cmd' => $cmd, 'file' => $file, 'param' => $param);
+
+
+    }
+
+    public function pop($cmd, $file, $execute = FALSE)
+    {
+
+    }
+
+    public function flush()
+    {
+
+    }
+
     /** 上传文件
      * @param $file string 上传文件的数据索引
      * @param $is_temp bool 是否上传到temp目录
