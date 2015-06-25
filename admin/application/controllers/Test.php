@@ -76,7 +76,7 @@ class Test extends CI_Controller
 
         var_dump($n);
 
-        $d= $this->file->get_path($n);
+        $d = $this->file->get_path($n);
 
         var_dump($d);
 
@@ -84,5 +84,16 @@ class Test extends CI_Controller
 
         var_dump($w);
 
+    }
+
+    public function r()
+    {
+        $str = '<p>说的发顺丰是否放是</p><link rel="canonical" href="http://codeigniter.org.cn/user_guide/libraries/file_uploading.html">';
+
+        preg_match_all('/<link.*?>/is', $str, $results);
+
+        $content = preg_replace('/<link.*>/is', '', $str);
+
+        var_dump($content);
     }
 }

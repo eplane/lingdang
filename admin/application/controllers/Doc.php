@@ -38,12 +38,12 @@ class Doc extends Controller_base
         $this->form_validation->set_rules('content', '内容', 'callback__illegal_words');
         $this->form_validation->set_rules('name', '标题', 'callback__illegal_words');
 
-        //执行server端验证
+        // 执行server端验证
         if ($this->form_validation->run() == FALSE)
         {
             $this->view('doc_edit2', $data);
         }
-        else    //表单验证成功
+        else // 表单验证成功
         {
             $doc['name'] = $this->input->post('name', TRUE);
             $doc['type'] = $this->input->post('type', TRUE);
@@ -53,8 +53,10 @@ class Doc extends Controller_base
 
             $this->load->library('Content');
 
-            //对文章的内容进行处理
+            // 对文章的内容进行处理
             $doc['content'] = $this->content->save($doc['content']);
+
+            //var_dump($doc['content']);
 
             if ($cmd == 'add')
             {
@@ -65,7 +67,7 @@ class Doc extends Controller_base
                 $this->mdoc->set($id, $doc);
             }
 
-            //$this->view('doc_edit2', $data);
+            $this->view('doc_edit2', $data);
 
             redirect(base_url() . 'doc.html');
         }

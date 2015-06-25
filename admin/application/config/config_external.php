@@ -35,7 +35,7 @@ $config['upload']['upload_path'] = APPPATH . '../../resource/upload/';          
 $config['upload']['temp_path'] = APPPATH . '../../resource/temp/';              //上传文件的临时目录
 $config['upload']['web_temp'] = 'http://localhost/dog/resource/temp/';       //文件的外部访问根目录
 $config['upload']['web_root'] = 'http://localhost/dog/resource/upload/';       //文件的外部访问根目录
-$config['upload']['allowed_types'] = 'gif|jpg|png';
+$config['upload']['allowed_types'] = 'gif|jpg|png|jpeg';
 $config['upload']['max_size'] = '1000';     //单位 K
 $config['upload']['encrypt_name'] = TRUE;  //不允许自动改名
 

@@ -18,13 +18,19 @@ class Content
 
     /** 对提交的文章内容进行处理
      * 1. 转存文章中的图片
-     * 2. 对html标签进行过滤，包括script，script，link
+     * 2. 对html标签进行过滤，包括script，link
      * @param $html
      * @return mixed
      */
     public function save($html)
     {
-        $content = $this->save_img($html);
+        $content = $html;
+
+        $content = htmlspecialchars_decode($content);
+
+        $content = preg_replace('/<script>.*?<\/script>/is', '', $content);
+        $content = preg_replace('/<link.*>/is', '', $content);
+        $content = preg_replace('/<style>.*?<\/style>/is', '', $content);
 
         return $content;
     }
@@ -44,36 +50,6 @@ class Content
         }
 
         return $temp;
-    }
-
-    private function save_img($html)
-    {
-        //获得文章中的临时图片信息
-        $imgs = $this->get_img($html);
-
-        $temp = [];
-
-        foreach ($imgs as $img)
-        {
-            $this->ci->load->library('File');
-
-            $fullname = get_file_fullname($img['file']);
-
-            //如果是网站内的临时文件
-            if ($this->ci->file->is_temp_file($fullname))
-            {
-                $name = get_file_name($img['file']);
-
-                $file = $this->ci->file->save($name);
-
-                $temp[$name]['file'] = get_file($file);
-
-                //替换文件
-                $html = str_replace($img['file'], $temp[$name]['file'], $html);
-            }
-        }
-
-        return $html;
     }
 
     /** 判断是否包含敏感关键词

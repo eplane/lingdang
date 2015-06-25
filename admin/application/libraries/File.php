@@ -20,44 +20,51 @@ class File
      * @param $file string 上传文件的数据索引
      * @param $is_temp bool 是否上传到temp目录
      * @param $replace bool
-     * @param null $types string 允许的类型
-     * @param null $size int 允许的大小，单位k
+     * @param $types string 允许的类型，类似jpg|png|gif
+     * @param $size int 允许的大小，单位k
      */
-    public function upload2($file, $is_temp = TRUE, $replace = TRUE, $types = NULL, $size = NULL)
+    public function upload($file, $is_temp = TRUE, $replace = TRUE, $types = NULL, $size = NULL)
     {
+        $config = $this->ci->config->item('upload');        //获取默认配置
 
-    }
-
-    //保存文件
-    public function upload($file, $types = NULL, $size = NULL)
-    {
-        //删除连续上传的重复文件
-        $last_file = $this->ci->session->$file;
-
-        if (NULL != $last_file && file_exists($last_file['path'] . $last_file['file']))
+        //是否将文件上传到temp文件夹
+        if ($is_temp)
         {
-            unlink($last_file['path'] . $last_file['file']);
+            $config['upload_path'] = $config['temp_path'];     //将临时路径设置成目标路径
+        }
+        else
+        {
+            $config['encrypt_name'] = FALSE;
+            $config['file_name'] = $this->create_file_name();
+            $config['upload_path'] = $this->get_path($config['file_name']);
+
+            if (FALSE == is_dir($config['upload_path']))
+            {
+                mkdir($config['upload_path'], 0777, TRUE);
+            }
         }
 
-        //保存文件到 temp
-        $config = $this->ci->config->item('upload');        //获取默认配置
-        $config['upload_path'] = $config['temp_path'];     //将临时路径设置成目标路径
-
         if (NULL != $size)
+        {
             $config['max_size'] = $size;                    //设置允许文件大小
+        }
 
         if (NULL != $types)
+        {
             $config['allowed_types'] = $types;           //设置允许文件类型
+        }
 
+        //加载上传类
         $this->ci->load->library('upload', $config);
 
         $result = array();
 
+        //上传文件
         if (!$this->ci->upload->do_upload($file))
         {
             $result['error'] = 'TRUE';
             $result['success'] = 'FALSE';
-            $result['method'] = 'save';
+            $result['method'] = 'upload';
             $result['message'] = $this->ci->upload->display_errors();
             return $result;
         }
@@ -65,17 +72,38 @@ class File
         {
             $data = array('upload_data' => $this->ci->upload->data());
 
-            //保存文件信息，供后面处理数据使用
-            $cache['file'] = $data['upload_data']['file_name'];
-            $cache['path'] = $data['upload_data']['file_path'];
-            //var_dump($cache);
-
-            $this->ci->session->$file = $cache;
-
             $result['error'] = 'FALSE';
             $result['success'] = 'TRUE';
+            $result['method'] = 'upload';
             $result['data'] = $data['upload_data'];
             $result['message'] = '';
+        }
+
+        //保存文件信息，供后面处理数据使用
+        $cache['file'] = $result['data']['file_name'];
+        $cache['path'] = $result['data']['file_path'];
+
+        //如果上传同id文件不覆盖
+        if (FALSE == $replace)
+        {
+            //保存临时文件的信息
+            $_SESSION[$file][] = $cache;
+        }
+        else
+        {
+            if (isset($_SESSION[$file]) && isset($_SESSION[$file]['file']))
+            {
+                if ($is_temp)
+                {
+                    $this->delete_temp($_SESSION[$file]['file']);
+                }
+                else
+                {
+                    $this->delete($_SESSION[$file]['file']);
+                }
+            }
+
+            $_SESSION[$file] = $cache;
         }
 
         return $result;

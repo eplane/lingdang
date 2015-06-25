@@ -88,9 +88,9 @@
                 height: '500',
                 allowedImageTypes: ['jpeg', 'jpg', 'png', 'gif'],
                 language: 'zh_cn',
-                imageUploadURL: '<?php echo base_url();?>ajax/upload_1.html',
-                imageUploadParams: {m: 1, id: "file"},
-                imageDeleteURL: '<?php echo base_url();?>ajax/delete_1.html'
+                imageUploadURL: '<?php echo base_url();?>ajax/upload.html',
+                imageUploadParams: {r: 0, id: "file", t: 0},
+                imageDeleteURL: '<?php echo base_url();?>ajax/delete.html'
             })
             .on('editable.afterRemoveImage', function (e, editor, $img)
             {

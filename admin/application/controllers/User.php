@@ -41,7 +41,7 @@ class User extends Controller_base
 
             $this->load->library('file');
 
-            $result = $this->file->upload('avatar', NULL, 500);    //接收客户端文件
+            $result = $this->file->upload('avatar', TRUE, TRUE, NULL, 500);    //接收客户端文件
 
             //如果修改了头像
             if ($result['error'] === 'FALSE')
