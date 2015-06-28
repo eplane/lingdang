@@ -1,5 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+//TODO Session id 有被劫持的风险，可以考虑自定义session id，id与ip和浏览器绑定
 class Controller_base extends CI_Controller
 {
     function __construct()
