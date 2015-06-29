@@ -17,8 +17,6 @@ class Content
     }
 
     /** 对提交的文章内容进行处理
-     * 1. 转存文章中的图片
-     * 2. 对html标签进行过滤，包括script，link
      * @param $html
      * @return mixed
      */
@@ -26,11 +24,17 @@ class Content
     {
         $content = $html;
 
-        $content = htmlspecialchars_decode($content);
-
+        //删除不安全的标签
         $content = preg_replace('/<script>.*?<\/script>/is', '', $content);
         $content = preg_replace('/<link.*>/is', '', $content);
         $content = preg_replace('/<style>.*?<\/style>/is', '', $content);
+
+        return $content;
+    }
+
+    public function load($html)
+    {
+        $content = htmlspecialchars_decode($html);
 
         return $content;
     }

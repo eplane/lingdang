@@ -67,6 +67,7 @@ class M_role extends m_base
     }
 
     /** 获得一个角色的全部权限
+     * TODO 可以有个更高效的办法
      * @param int $role
      */
     public function get_access($roles, $refresh = FALSE)

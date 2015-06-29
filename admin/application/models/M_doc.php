@@ -7,25 +7,30 @@ class M_doc extends m_base
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->library('email');
-
-        $config = $this->config->item('email');
-        $this->email->initialize($config);
-        $this->email->from($config['service-email'], $config['service-name']);
     }
 
-    public function get($id)
+    public function get($id, $refresh = FALSE)
     {
-        $data = $this->mongo->get_where('doc', array("_id" => new MongoId($id)))->result_array();
+        $data = $this->cache->get('doc.' . $id);
 
-        if ($data != FALSE)
+        if ($data == FALSE)
         {
-            return $data[0];
+            $data = $this->mongo->get_where('doc', array("_id" => new MongoId($id)))->result_array();
+
+            if ($data != FALSE)
+            {
+                //$data[0]['content'] = htmlspecialchars_decode($data[0]['content']);
+                $this->cache->save('doc.' . $id, $data[0]);
+                return $data[0];
+            }
+            else
+            {
+                return FALSE;
+            }
         }
         else
         {
-            return FALSE;
+            return $data;
         }
     }
 
@@ -61,18 +66,21 @@ class M_doc extends m_base
             $log['me'] = $_SESSION['me']['id'];
             $log['id'] = $id;
             $this->log->write(2, $log, $this->mongo);
+
+            $this->cache->delete('doc.' . $id);
         }
 
         return $r;
     }
 
-    public function all($refresh = FALSE)
+    public function all()
     {
         return $this->mongo->get('doc')->result_array();
     }
 
     public function delete($id)
     {
+        $this->cache->delete('doc.' . $id);
         return $this->mongo->where(array('_id' => new MongoId($id)))->delete('doc');
     }
 }

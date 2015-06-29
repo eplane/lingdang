@@ -40,10 +40,10 @@ class Role extends Controller_base
         }
         else    //表单验证成功
         {
-            $role['name']    = $this->input->post('name');
-            $role['status']  = $this->input->post('status');
-            $role['explain'] = $this->input->post('explain');
-            $role['access']  = implode(',', $this->input->post('access'));
+            $role['name'] = $this->input->post('name', TRUE);
+            $role['status'] = $this->input->post('status', TRUE);
+            $role['explain'] = $this->input->post('explain', TRUE);
+            $role['access'] = implode(',', $this->input->post('access', TRUE));
 
             if ($cmd == 'add')
             {
@@ -138,7 +138,7 @@ class Role extends Controller_base
         redirect(base_url() . 'role/edit/' . $role . '.html');
     }
 
-    /**
+    /** Ajax调用，为一个角色添加用户，可以一次添加多个
      * TODO 存在循环update，应该优化
      */
     public function add_user()
@@ -147,9 +147,9 @@ class Role extends Controller_base
 
         $this->load->model('m_user', 'muser');
 
-        $users = $this->input->post('user');
+        $users = $this->input->post('user' ,TRUE);
 
-        $role = $this->input->post('id');
+        $role = $this->input->post('id' ,TRUE);
 
         foreach ($users as $id)
         {

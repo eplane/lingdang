@@ -34,10 +34,10 @@ class User extends Controller_base
         else
         {
             //保存角色信息
-            $submit['name'] = $this->input->post('name');
-            $submit['nick'] = $this->input->post('nick');
-            $submit['mobile'] = $this->input->post('mobile');
-            $submit['email'] = $this->input->post('email');
+            $submit['name'] = $this->input->post('name', TRUE);
+            $submit['nick'] = $this->input->post('nick', TRUE);
+            $submit['mobile'] = $this->input->post('mobile', TRUE);
+            $submit['email'] = $this->input->post('email', TRUE);
 
             $this->load->library('file');
 
@@ -104,11 +104,11 @@ class User extends Controller_base
         }
         else
         {
-            $user['uid'] = $this->input->post('uid');
-            $user['psw'] = $this->input->post('psw');
-            $user['mobile'] = $this->input->post('mobile');
-            $user['email'] = $this->input->post('email');
-            $user['role'] = implode(',', $this->input->post('role'));
+            $user['uid'] = $this->input->post('uid', TRUE);
+            $user['psw'] = $this->input->post('psw', TRUE);
+            $user['mobile'] = $this->input->post('mobile', TRUE);
+            $user['email'] = $this->input->post('email', TRUE);
+            $user['role'] = implode(',', $this->input->post('role', TRUE));
             //var_dump($user);
 
             $this->muser->add($user);

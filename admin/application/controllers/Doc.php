@@ -26,8 +26,8 @@ class Doc extends Controller_base
         $this->view('doc_list', $data);
     }
 
-    //TODO 修改文档时，图片的删除和上传是实时的，即使最后没有按保存，图片也会被修改
-    // 这会造成文档内容和图片的不同步。
+    //TODO 文章的图片上传后，没有删除机制。
+    //做了很多尝试，最后放弃跟踪用户的行为来精确的控制图片的删除和上传。因为太容易出bug，同时开销也不小。
     private function _doc($data, $id = 0, $cmd = 'add')
     {
         $this->load->library('form_validation');
@@ -47,11 +47,11 @@ class Doc extends Controller_base
         {
             $doc['name'] = $this->input->post('name', TRUE);
             $doc['type'] = $this->input->post('type', TRUE);
-            $doc['content'] = $this->input->post('content', TRUE);
-
-            //var_dump($doc);
+            $doc['content'] = $this->input->post('content');
 
             $this->load->library('Content');
+
+            //var_dump($doc['content']);
 
             // 对文章的内容进行处理
             $doc['content'] = $this->content->save($doc['content']);

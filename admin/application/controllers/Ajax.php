@@ -22,7 +22,7 @@ class Ajax extends Controller_base
         //权限过滤
         if (TRUE === $this->is_permit('用户状态'))
         {
-            $id = $this->input->post('id');
+            $id = $this->input->post('id', TRUE);
 
             $this->load->model('m_user', 'muser');
 
@@ -48,7 +48,7 @@ class Ajax extends Controller_base
         //权限过滤
         if (TRUE === $this->is_permit('角色修改'))
         {
-            $id = $this->input->post('id');
+            $id = $this->input->post('id', TRUE);
 
             $this->load->model('m_user', 'muser');
 
@@ -74,29 +74,27 @@ class Ajax extends Controller_base
         $urls[] = 'doc/edit';
         $this->url($urls, TRUE);
 
-        $id = $this->input->post('id');
-        $replace = $this->input->post('r');
-        $temp = $this->input->post('t');
+        $id = $this->input->post('id', TRUE);
+        $replace = $this->input->post('r', TRUE);
+        $temp = $this->input->post('t', TRUE);
 
         $this->load->library('File');
 
         $r = $this->file->upload($id, $temp, $replace);
 
-        //echo json_encode(array('link' => get_file($r['data']['file_name'])));
-        echo json_encode(array('link' => 'https://www.baidu.com/img/baidu_jgylogo3.gif'));
+        echo json_encode(array('link' => get_file($r['data']['file_name'])));
+        //echo json_encode(array('link' => 'https://www.baidu.com/img/baidu_jgylogo3.gif'));
     }
 
     public function delete()
     {
-        // 在base的构造里已经判断了是否登录
-        $urls[] = 'doc/add.html';
-        $urls[] = 'doc/edit';
+        $urls[] = '';
 
         $this->url($urls, TRUE);
 
         $this->load->library('File');
 
-        $file = $this->input->post('file');
+        $file = $this->input->post('file', TRUE);
 
         $file = get_file_fullname($file);
 
@@ -104,22 +102,5 @@ class Ajax extends Controller_base
         {
             $this->file->delete_temp($file);
         }
-    }
-
-    /*
-     * 富文本编辑
-     * */
-    public function upload_stack()
-    {
-        //请求地址过滤
-        $urls[] = 'doc/add.html';
-        $urls[] = 'doc/edit';
-        $this->url($urls, TRUE);
-
-        $id = $this->input->post('id');
-        $replace = $this->input->post('r');
-        $temp = $this->input->post('t');
-
-        $this->load->library('File');
     }
 }

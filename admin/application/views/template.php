@@ -109,11 +109,23 @@
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span>用户管理</span>
+                        <span>后台用户管理</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="<?php echo base_url(); ?>user/users.html"><i class="fa fa-angle-double-right"></i>管理员列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>role/roles.html"><i class="fa fa-angle-double-right"></i>后台角色列表</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span>前台用户管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?php echo base_url(); ?>user/users.html"><i class="fa fa-angle-double-right"></i>用户列表</a></li>
                         <li><a href="<?php echo base_url(); ?>role/roles.html"><i class="fa fa-angle-double-right"></i>角色列表</a></li>
                     </ul>
                 </li>
@@ -130,7 +142,7 @@
                         <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>博客列表</a></li>
                         <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>图片列表</a></li>
                         <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>频道列表</a></li>
-                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>关键词列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>word.html"><i class="fa fa-angle-double-right"></i>关键词列表</a></li>
                     </ul>
                 </li>
 

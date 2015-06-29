@@ -227,7 +227,7 @@ class Edb
      */
     public function get_row_id($refresh, $table, $id)
     {
-        $key = ($table . $id);
+        $key = ($table . '.' . $id);
 
         if (TRUE === $refresh)
         {
@@ -256,7 +256,7 @@ class Edb
     {
         $r = $this->update($table, $data, '`id` = ' . $id);
 
-        $key = $table . $id;
+        $key = ($table . '.' . $id);
 
         $this->ci->cache->delete($key);
 

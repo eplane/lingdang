@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <div class="col-md-12">
-                    <input type="submit" id="sss" value="保存" class="btn btn-default">
+                    <input type="submit" value="保存" class="btn btn-default">
                 </div>
             </div>
 
@@ -75,6 +75,7 @@
 <script src="<?php echo get_path('common-js'); ?>froala/js/plugins/block_styles.min.js"></script>
 <script src="<?php echo get_path('common-js'); ?>froala/js/plugins/video.min.js"></script>
 <script src="<?php echo get_path('common-js'); ?>froala/js/plugins/fullscreen.min.js"></script>
+<script src="<?php echo get_path('common-js'); ?>froala/js/plugins/file_upload.min.js"></script>
 <script src="<?php echo get_path('common-js'); ?>froala/js/langs/zh_cn.js"></script>
 
 <script>
@@ -86,17 +87,11 @@
             .editable({
                 inlineMode: false,
                 height: '500',
+                buttons: ['removeFormat', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'color', 'formatBlock', 'inlineStyle', 'align', 'insertOrderedList', 'insertUnorderedList', 'outdent', 'indent', 'selectAll', 'createLink', 'insertImage', 'insertVideo', 'uploadFile', 'table', 'html', 'insertHorizontalRule'],
                 allowedImageTypes: ['jpeg', 'jpg', 'png', 'gif'],
                 language: 'zh_cn',
                 imageUploadURL: '<?php echo base_url();?>ajax/upload.html',
-                imageUploadParams: {r: 0, id: "file", t: 0},
-                imageDeleteURL: '<?php echo base_url();?>ajax/delete.html'
-            })
-            .on('editable.afterRemoveImage', function (e, editor, $img)
-            {
-                editor.options.imageDeleteParams = {file: $img.attr('src')};
-
-                editor.deleteImage($img);
+                imageUploadParams: {r: 0, id: "file", t: 0}
             });
     });
 </script>
