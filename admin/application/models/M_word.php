@@ -9,7 +9,7 @@ class M_word extends m_base
         parent::__construct();
     }
 
-    public function get($id)
+    public function get($type, $refresh = FALSE)
     {
 
     }
