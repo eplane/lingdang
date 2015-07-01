@@ -11,27 +11,7 @@ class M_doc extends m_base
 
     public function get($id, $refresh = FALSE)
     {
-        $data = $this->cache->get('doc.' . $id);
-
-        if ($data == FALSE)
-        {
-            $data = $this->mongo->get_where('doc', array("_id" => new MongoId($id)))->result_array();
-
-            if ($data != FALSE)
-            {
-                //$data[0]['content'] = htmlspecialchars_decode($data[0]['content']);
-                $this->cache->save('doc.' . $id, $data[0]);
-                return $data[0];
-            }
-            else
-            {
-                return FALSE;
-            }
-        }
-        else
-        {
-            return $data;
-        }
+        return $this->edb->mget($refresh, 'doc', $id);
     }
 
     public function add($data)

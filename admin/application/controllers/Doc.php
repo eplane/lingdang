@@ -94,8 +94,6 @@ class Doc extends Controller_base
 
         $data['doc'] = $this->mdoc->get($id);
 
-        //var_dump($data['doc']);
-
         $this->_doc($data, $id, 'edit');
     }
 

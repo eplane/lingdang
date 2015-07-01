@@ -141,7 +141,7 @@
                         <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>文章列表</a></li>
                         <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>博客列表</a></li>
                         <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>图片列表</a></li>
-                        <li><a href="<?php echo base_url(); ?>company/edit.html"><i class="fa fa-angle-double-right"></i>频道列表</a></li>
+                        <li><a href="<?php echo base_url(); ?>channel.html"><i class="fa fa-angle-double-right"></i>频道管理</a></li>
                         <li><a href="<?php echo base_url(); ?>word.html"><i class="fa fa-angle-double-right"></i>关键词列表</a></li>
                     </ul>
                 </li>

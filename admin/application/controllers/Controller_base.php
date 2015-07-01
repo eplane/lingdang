@@ -42,7 +42,7 @@ class Controller_base extends CI_Controller
 
     protected function is_permit($access, $jump = FALSE)
     {
-        $count        = 0;
+        $count = 0;
         $count_access = count($access);
 
         //获得权限验证列表
@@ -104,14 +104,12 @@ class Controller_base extends CI_Controller
         echo '没有权限';
     }
 
-    //敏感词验证
-    //TODO 敏感词数据源
+    //禁止词验证
     public function _illegal_words($str)
     {
         $this->load->library('Content');
+        $this->load->model('m_word', 'mword');
 
-        $words = ['测试'];
-
-        return $this->content->illegal_words($str, $words);
+        return $this->mword->have('禁止词', $str);
     }
 }

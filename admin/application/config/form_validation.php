@@ -173,6 +173,17 @@ $config = Array(
                 'max_length' => '%s 必须在1M长度以下'
             )
         )
+    ),
+    'word' => Array(
+        array(
+            'field' => 'word0',
+            'label' => '禁止词',
+            'rules' => 'trim|required',
+            'errors' => array(
+                'required' => '%s 不能为空'
+            )
+        )
     )
+
 
 );

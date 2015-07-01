@@ -19,6 +19,7 @@ class Edb
         $this->ci =& get_instance();
         $this->ci->load->database();
         $this->ci->load->library('Cache');
+        $this->ci->load->library('CI_Mongo', NULL, 'mongo');
         $this->db = $this->ci->db;
     }
 
@@ -323,5 +324,34 @@ class Edb
         $data = explode(',', $data);
 
         return $data;
+    }
+
+    /*****************************[mongo cache]******************************/
+
+    public function mget($refresh, $collection, $id)
+    {
+        if ($refresh)
+            $this->ci->cache->delete($collection . '.' . $id);
+
+        $data = $this->ci->cache->get($collection . '.' . $id);
+
+        if ($data == FALSE)
+        {
+            $data = $this->ci->mongo->get_where($collection, array("_id" => new MongoId($id)))->result_array();
+
+            if ($data != FALSE)
+            {
+                $this->ci->cache->save($collection . '.' . $id, $data[0]);
+                return $data[0];
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+        else
+        {
+            return $data;
+        }
     }
 }

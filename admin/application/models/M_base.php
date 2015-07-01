@@ -10,7 +10,7 @@ class M_base extends CI_Model
         parent::__construct();
 
         //加载数据库，这一步骤会将框架的数据库类一起加载
+        //这里也会加载mongo库
         $this->load->library('Edb');
-        $this->load->library('CI_Mongo', NULL, 'mongo');
     }
 }

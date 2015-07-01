@@ -55,26 +55,4 @@ class Content
 
         return $temp;
     }
-
-    /** 判断是否包含敏感关键词
-     * TODO 需要支持中文分词
-     * @param $html string
-     * @param $words array 敏感词组
-     * @return bool
-     */
-    public function illegal_words($html, $words)
-    {
-        if (count($words) == 0)
-            return TRUE;
-
-        foreach ($words as $w)
-        {
-            if (FALSE !== strpos($html, $w))
-            {
-                return FALSE;
-            }
-        }
-
-        return TRUE;
-    }
 }
