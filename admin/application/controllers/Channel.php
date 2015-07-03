@@ -22,8 +22,6 @@ class Channel extends Controller_base
         //路径导航条数据
         $data['nav'] = ['主页' => 'main.html', '频道管理' => ''];
 
-
-
         $this->view('channel_list', $data);
     }
 }
