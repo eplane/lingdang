@@ -11,7 +11,7 @@
  */
 var left_side_width = 220; //Sidebar width in pixels
 
-$(function() {
+(function($){$(function() {
     "use strict";
 
     //Enable sidebar toggle
@@ -140,12 +140,7 @@ $(function() {
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal'
     });
-});
-
-
-
-
-
+})})(jQuery);
 
 function fix_sidebar() {
     //Make sure the body tag has the .fixed class
