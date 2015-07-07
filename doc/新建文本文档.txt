@@ -19,3 +19,6 @@ http://www.css-js.cn/
 
 SCWS 中文分词
 http://www.xunsearch.com/scws/
+
+短信
+http://www.ihuyi.com/about.php
