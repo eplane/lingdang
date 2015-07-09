@@ -1,3 +1,31 @@
+apache
+yum install httpd
+
+vi /etc/httpd/conf/httpd.conf #编辑
+找到 #ServerName www.example.com:80
+修改为 ServerName www.jbaobao.net:80 #这里设置为你自己的域名，如果没有域名，可以设置为localhost
+:wq! #保存退出
+chkconfig httpd on #设为开机启动
+/etc/init.d/httpd restart #重启Apache
+
+注意如果需要rewrite，打开rewrite模块，并且需要打开rewrite权限
+
+注意打开防火墙
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+mysql
+
+yum install mysql mysql-server 
+
+chkconfig mysqld on #设为开机启动
+
+改变权限 #chown -R mysql:mysql /var/lib/mysql
+
+/etc/init.d/mysqld start 启动服务
+
+
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'pm4mysql' WITH GRANT OPTION; 
+
 php 5.4
 
 强制卸载 
@@ -9,13 +37,30 @@ tar zxvf xxxxxxxxxxx
 
 
 rpm -Uvh http://repo.webtatic.com/yum/el6/latest.rpm
-yum install php54w 
+yum install php54w php54w-devel
 
 
 httpd.conf
 LoadModule php5_module        modules/libphp5.so
 AddType application/x-httpd-php .php
 AddType application/x-httpd-php-source .phps
+
+
+
+Memacached
+
+yum install memcached
+
+chkconfig --level 2345 memcached on	注册服务
+
+vi /etc/sysconfig/memcached	编辑服务配置
+PORT,服务启动端口。
+USER,服务启动用户。
+MAXCONN,服务配置支持最大连接数。
+CACHESIZE,服务支持的最大内存，以M为单位。
+
+memcached -d -c 1024 -m 128 -u root
+
 
 
 安装libmemcached
@@ -33,7 +78,15 @@ memcached
 prefork 优化连接数限制
 
 查找rmp包安装位置
-rpm -ql libmemcached | cat -n
 
 
-memcached -d -u root -p 11210
+
+
+
+
+
+openssl genrsa 1024 > server.key
+
+openssl req -config E:\wamp\bin\apache\apache2.4.9\conf\openssl.cnf -new -key server.key > server.csr
+
+openssl req -config E:\wamp\bin\apache\apache2.4.9\conf\openssl.cnf -x509 -days 365 -key server.key -in server.csr > server.crt
