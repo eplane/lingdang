@@ -20,7 +20,7 @@ class Captcha
         $this->CI->load->helper('captcha');
 
         $vals = array(
-            'img_path' => APPPATH. $this->CI->config->item('captcha_path'),
+            'img_path' => APPPATH . $this->CI->config->item('captcha_path'),
             'img_url' => base_url() . $this->CI->config->item('captcha_path'),
             'img_width' => $w,
             'img_height' => $h,
@@ -82,8 +82,7 @@ class Captcha
     private function clear()
     {
         //每隔一段时间，删除一次旧文件
-        $this->CI->load->library('ECache');
-        $last = $this->CI->ecache->get('captcha.clear');
+        $last = $this->CI->cache->get('captcha.clear');
         $now = time();
         if ($now - $last < 600)
             return;
@@ -110,6 +109,6 @@ class Captcha
             }
         }
 
-        $this->CI->ecache->set('captcha.clear', time());
+        $this->CI->cache->save('captcha.clear', time(), 3600);
     }
 }
