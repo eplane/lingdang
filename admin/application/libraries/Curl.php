@@ -62,11 +62,33 @@ class Curl
         $output = curl_exec($ch);
 
         //var_dump(curl_error($ch));
-	//echo '<br>';
+        //echo '<br>';
 
         curl_close($ch);
 
         return $output;
+    }
+
+    public function http_post($url, $data)
+    {
+        $temp = '';
+        foreach ($data as $k => $v)
+        {
+            $temp .= $k . '=' . $v . '&';
+        }
+
+        $temp = trim($temp, '&');
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $temp);
+        $return_str = curl_exec($curl);
+        curl_close($curl);
+        return $return_str;
     }
 
     /** 证书必须是pem格式

@@ -100,7 +100,6 @@ class Token
             $token .= $temp[trim($n)];
         }
 
-        //$_SESSION['TOKEN'][] = $token;
         $this->cache->save($token, $token, $this->config['timeout']);
 
         return $token;
@@ -108,9 +107,6 @@ class Token
 
     private function valid($appid, $token, $option, $ip)
     {
-        /*$tokens = $_SESSION['TOKEN'];
-        $i = array_search($token, $tokens);*/
-
         $token = $this->cache->get($token);
 
         if (FALSE === $token)

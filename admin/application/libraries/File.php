@@ -37,11 +37,11 @@ class File
             $config['encrypt_name'] = FALSE;
             $config['file_name'] = $this->create_file_name();
             $config['upload_path'] = $this->get_path($config['file_name']);
+        }
 
-            if (FALSE == is_dir($config['upload_path']))
-            {
-                mkdir($config['upload_path'], 0777, TRUE);
-            }
+        if (FALSE == is_dir($config['upload_path']))
+        {
+            mkdir($config['upload_path'], 0777, TRUE);
         }
 
         if (NULL != $size)
@@ -104,6 +104,77 @@ class File
             }
 
             $_SESSION[$file] = $cache;
+        }
+
+        return $result;
+    }
+
+    public function upload_base64($file, $type, $types = NULL, $size = NULL)
+    {
+        $config = $this->ci->config->item('upload');        //获取默认配置
+
+        if ($size == NULL)
+        {
+            $size = $config['max_size'];
+        }
+        if ($types == NULL)
+        {
+            $types = $config['allowed_types'];
+        }
+
+        $name = $this->create_file_name();
+
+        $path = $this->get_path($name);
+
+        if (FALSE == is_dir($path))
+        {
+            mkdir($path, 0777, TRUE);
+        }
+
+        if (strpos($types, $type) === FALSE)
+        {
+            $result = array(
+                'error' => 1,
+                'msg' => '该类型文件不允许上传'
+            );
+
+            return $result;
+        }
+
+        $file_str = base64_decode($file);
+
+        if ((strlen($file_str) / 1000) > $size)
+        {
+            $result = array(
+                'error' => 1,
+                'msg' => '文件超过限制大小'
+            );
+
+            return $result;
+        }
+
+        $r = file_put_contents($path . $name . '.' . $type, $file_str);
+
+
+
+        $result = FALSE;
+
+        if ($r != FALSE)
+        {
+            $isize = getimagesize($path . $name . '.' . $type);
+
+            $result = array(
+                'error' => 0,
+                'file_name' => $name . '.' . $type,
+                'file_path' => $path,
+                'file_type' => $isize['mime'],
+                'full_path' => $path . $name . '.' . $type,
+                'raw_name' => $name,
+                'file_ext' => '.' . $type,
+                'file_size' => $r / 1000,
+                'image_width' => $isize[0],
+                'image_height' => $isize[1],
+            );
         }
 
         return $result;
